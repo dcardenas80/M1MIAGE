@@ -12,13 +12,15 @@ public class MoteurEditionImpl implements MoteurEdition
 	 * of the class MoteurEditionImpl
 	 */
 	private static MoteurEditionImpl moteurEditionImplInstance;
-	private StringBuffer textMoteur;
+	private Buffer textMoteur;
+	private char texte;
 	private MoteurEditionImpl() {
-
+		this.textMoteur = new Buffer();
 	}
 
 	public static MoteurEditionImpl getInstance() {
 		if (moteurEditionImplInstance == null) {
+			
 			moteurEditionImplInstance = new MoteurEditionImpl();
 		}
 		return moteurEditionImplInstance;
@@ -43,8 +45,9 @@ public class MoteurEditionImpl implements MoteurEdition
 	}
 
 	@Override
-	public void insTexte(String texte) {
+	public void insTexte(char texte) {
 		
+	
 		textMoteur.append(texte);
 	}
 	

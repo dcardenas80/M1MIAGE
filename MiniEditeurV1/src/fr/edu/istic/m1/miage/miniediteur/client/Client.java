@@ -2,13 +2,18 @@ package fr.edu.istic.m1.miage.miniediteur.client;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 
 import fr.edu.istic.m1.miage.miniediteur.command.Command;
+import fr.edu.istic.m1.miage.miniediteur.command.InsText;
 import fr.edu.istic.m1.miage.miniediteur.invoker.IHM;
 import fr.edu.istic.m1.miage.miniediteur.invoker.IHMImpl;
 import fr.edu.istic.m1.miage.miniediteur.receiver.MoteurEdition;
@@ -18,17 +23,17 @@ import fr.edu.istic.m1.miage.miniediteur.receiver.MoteurEditionImpl;
  * @author Diego Cardenas
  * @version 1.0
  * 
- *          Class Main, this class plays the role of ActionListener of the events
- *          of the interface and is the client in one of the command patterns
- *          implemented.
+ *          Class Main, this class plays the role of ActionListener of the
+ *          events of the interface and is the client in one of the command
+ *          patterns implemented.
  * 
  * 
  */
 
-public class Client implements ActionListener {
+public class Client implements ActionListener, KeyListener, CaretListener {
 
-	private static Client monAppli;
-	private static IHM IHMImplInstance;
+	private static Client client;
+	private static IHMImpl IHMImplInstance;
 	private static MoteurEdition moteurEditionImplInstance;
 	private Command command;
 
@@ -40,7 +45,6 @@ public class Client implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String btnId = e.getActionCommand();
 		if (btnId.contentEquals("Insérer Texte")) {
-			
 
 		}
 
@@ -52,14 +56,46 @@ public class Client implements ActionListener {
 	 * @return MonAppli unique instance of the class
 	 */
 	public static Client getInstance() {
-		if (monAppli == null) {
-			monAppli = new Client();
+		if (client == null) {
+			client = new Client();
 		}
-		return monAppli;
+		return client;
+	}
+
+	@Override
+	public void caretUpdate(CaretEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		e.consume();
+		char keyChar = e.getKeyChar();
+		if (keyChar != '\b') /** if key typed is not a backspace */
+		{
+			IHMImplInstance.setLastChart(keyChar);
+			command = new InsText();
+			IHMImplInstance.setCommand("textInsertion", command);
+			
+		}
+
 	}
 
 	public static void main(String[] args) {
-		monAppli = Client.getInstance();
+		client = Client.getInstance();
 		IHMImplInstance = IHMImpl.getInstance();
 		moteurEditionImplInstance = MoteurEditionImpl.getInstance();
 

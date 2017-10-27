@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
@@ -11,11 +12,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.event.CaretListener;
 
 import fr.edu.istic.m1.miage.miniediteur.client.Client;
 import fr.edu.istic.m1.miage.miniediteur.command.Coller;
+import fr.edu.istic.m1.miage.miniediteur.command.Command;
 import fr.edu.istic.m1.miage.miniediteur.command.Copier;
 import fr.edu.istic.m1.miage.miniediteur.command.Couper;
 import fr.edu.istic.m1.miage.miniediteur.command.InsText;
@@ -34,89 +38,42 @@ public class IHMImpl implements IHM {
 	 * class IHMImpl
 	 */
 	private static IHMImpl IHMImplInstance;
-	private static Client monAppli;
+	private static Client client;
+
+	private int selectionOrigin;
+	private int selectionSize;
+	private String text;
+	private char lastChart;
 	private Couper couperSelection;
 	private Coller collerSelection;
 	private InsText insertText;
 	private Selection texteSelection;
 	private Copier copierSelection;
 	private String textToInsert;
-
-	private IHMImpl(ActionListener listener) {
-		initialize(listener);
-
-	}
-
-	public void setText() {
-		Object[] options = { "Annuler", "Insérer" };
-
-		JPanel panel = new JPanel();
-		panel.add(new JLabel("Insérer Texte"));
-		JTextField textField = new JTextField(20);
-		panel.add(textField);
-
-		int result = JOptionPane.showOptionDialog(null, panel, "veuillez insérer votre texter",
-				JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, null);
-
-		if (result == JOptionPane.YES_OPTION) {
-			this.setTextToInsert(textField.getText());
-		}
-	}
-	
-	public String getTextToInsert() {
-		return textToInsert;
-	}
-
-	public void setTextToInsert(String textToInsert) {
-		this.textToInsert = textToInsert;
-	}
-	public Couper getCouperSelection() {
-		return couperSelection;
-	}
-
-	public void setCouperSelection(Couper couperSelection) {
-		this.couperSelection = couperSelection;
-	}
-
-	public Coller getCollerSelection() {
-		return collerSelection;
-	}
-
-	public void setCollerSelection(Coller collerSelection) {
-		this.collerSelection = collerSelection;
-	}
-
-	public InsText getInsertText() {
-		return insertText;
-	}
-
-	public void setInsertText(InsText insertText) {
-		this.insertText = insertText;
-	}
-
-	public Selection getTexteSelection() {
-		return texteSelection;
-	}
-
-	public void setTexteSelection(Selection texteSelection) {
-		this.texteSelection = texteSelection;
-	}
-
-	public Copier getCopierSelection() {
-		return copierSelection;
-	}
-
-	public void setCopierSelection(Copier copierSelection) {
-		this.copierSelection = copierSelection;
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private JFrame frmMiniEditeur;
-	private JEditorPane edtText;
 
-	private void initialize(ActionListener listener) {
+	private IHMImpl(ActionListener actionListener, CaretListener caretListener, KeyListener keyListener) {
+		initialize(actionListener, caretListener, keyListener);
+
+	}
+
+//	public void setText() {
+//		Object[] options = { "Annuler", "Insérer" };
+//
+//		JPanel panel = new JPanel();
+//		panel.add(new JLabel("Insérer Texte"));
+//		JTextField textField = new JTextField(20);
+//		panel.add(textField);
+//
+//		int result = JOptionPane.showOptionDialog(null, panel, "veuillez insérer votre texter",
+//				JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, null);
+//
+//		if (result == JOptionPane.YES_OPTION) {
+//			this.setTextToInsert(textField.getText());
+//		}
+//	}
+
+	private void initialize(ActionListener actionListener, CaretListener caretListener, KeyListener keyListener) {
 		frmMiniEditeur = new JFrame();
 		frmMiniEditeur.setTitle("Mini Editeur");
 		frmMiniEditeur.setForeground(Color.GRAY);
@@ -130,26 +87,78 @@ public class IHMImpl implements IHM {
 
 		JButton btnIns = new JButton("Ins\u00E9rer Texte");
 		btnIns.setVerticalAlignment(SwingConstants.TOP);
-		btnIns.addActionListener(listener);
+		btnIns.addActionListener(actionListener);
 
 		pnlBorder.add(btnIns);
-		JPanel pnlText = new JPanel();
+		JTextArea pnlText = new JTextArea();
+		pnlText.addCaretListener(caretListener);
+		pnlText.addKeyListener(keyListener);
 		pnlText.setBackground(Color.WHITE);
 		frmMiniEditeur.getContentPane().add(pnlText, BorderLayout.CENTER);
-
-		edtText = new JEditorPane();
-		edtText.setBounds(0, 0, 434, 241);
-		pnlText.add(edtText);
 
 	}
 
 	public static IHMImpl getInstance() {
 		if (IHMImplInstance == null) {
-			monAppli = Client.getInstance();
-			IHMImplInstance = new IHMImpl(monAppli);
+			client = Client.getInstance();
+			IHMImplInstance = new IHMImpl(client,client,client);
 			IHMImplInstance.frmMiniEditeur.setVisible(true);
 		}
 		return IHMImplInstance;
 	}
+	@Override
+	public void setCommand(String key, Command command) {
+		// TODO Auto-generated method stub
+		if(key.contentEquals("textInsertion")) {
+			insertText = (InsText) command;
+			insertText.execute();
+		}
+		
+	}
+
+	/**
+	 * Getters and Setters
+	 */
+
+	public int getSelectionOrigin() {
+		return selectionOrigin;
+	}
+
+	public void setSelectionOrigin(int selectionOrigin) {
+		this.selectionOrigin = selectionOrigin;
+	}
+
+	public int getSelectionSize() {
+		return selectionSize;
+	}
+
+	public void setSelectionSize(int selectionSize) {
+		this.selectionSize = selectionSize;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public char getLastChart() {
+		return lastChart;
+	}
+
+	public void setLastChart(char lastChart) {
+		this.lastChart = lastChart;
+	}
+
+	public String getTextToInsert() {
+		return textToInsert;
+	}
+
+	public void setTextToInsert(String textToInsert) {
+		this.textToInsert = textToInsert;
+	}
+
 
 }

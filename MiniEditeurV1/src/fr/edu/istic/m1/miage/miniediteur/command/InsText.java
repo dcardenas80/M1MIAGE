@@ -17,7 +17,7 @@ public class InsText implements Command {
 	public void execute() {
 	   ihmImpl = IHMImpl.getInstance();
 	   moteurEditionImpl = MoteurEditionImpl.getInstance();
-	   moteurEditionImpl.insTexte(ihmImpl.getTextToInsert());
+	   moteurEditionImpl.insTexte(ihmImpl.getLastChart());
 
 	}
 

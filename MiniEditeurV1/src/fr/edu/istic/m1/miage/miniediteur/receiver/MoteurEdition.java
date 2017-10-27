@@ -11,7 +11,7 @@ public interface MoteurEdition
 	
 	void copier( );
 	
-	void insTexte(String texte );
+	void insTexte(char texte );
 	
 	
 }

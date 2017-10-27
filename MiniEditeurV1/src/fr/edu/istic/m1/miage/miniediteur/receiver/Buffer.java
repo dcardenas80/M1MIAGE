@@ -8,10 +8,11 @@ public class Buffer
 {
 	private int monBuffer;
 	
-	private MoteurEditionImpl monBuffer2;
 	
-	private String zoneTexte;
-	
+	private StringBuffer motorText;
+	public Buffer() {
+		motorText = new StringBuffer();
+	}
 	public void inserer( )
 	{
 		
@@ -19,6 +20,12 @@ public class Buffer
 	
 	public void oter( )
 	{
+		
+	}
+
+	public void append(char texte) {
+		// TODO Auto-generated method stub
+		motorText.append(texte);
 		
 	}
 	
