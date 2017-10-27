@@ -1,4 +1,4 @@
-package fr.edu.istic.m1.miage.miniediteur;
+package fr.edu.istic.m1.miage.miniediteur.invoker;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

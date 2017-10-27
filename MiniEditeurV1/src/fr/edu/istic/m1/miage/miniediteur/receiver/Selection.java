@@ -1,4 +1,7 @@
-package fr.edu.istic.m1.miage.miniediteur;
+package fr.edu.istic.m1.miage.miniediteur.receiver;
+
+import fr.edu.istic.m1.miage.miniediteur.command.Command;
+
 /**
  * @(#) Selection.java
  */

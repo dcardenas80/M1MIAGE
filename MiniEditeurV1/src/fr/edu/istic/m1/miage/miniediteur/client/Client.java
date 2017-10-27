@@ -1,4 +1,4 @@
-package fr.edu.istic.m1.miage.miniediteur;
+package fr.edu.istic.m1.miage.miniediteur.client;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,6 +7,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import fr.edu.istic.m1.miage.miniediteur.command.Command;
+import fr.edu.istic.m1.miage.miniediteur.invoker.IHM;
+import fr.edu.istic.m1.miage.miniediteur.invoker.IHMImpl;
+import fr.edu.istic.m1.miage.miniediteur.receiver.MoteurEdition;
+import fr.edu.istic.m1.miage.miniediteur.receiver.MoteurEditionImpl;
 
 /**
  * @author Diego Cardenas
@@ -19,9 +25,9 @@ import javax.swing.JTextField;
  * 
  */
 
-public class MonAppli implements ActionListener {
+public class Client implements ActionListener {
 
-	private static MonAppli monAppli;
+	private static Client monAppli;
 	private static IHM IHMImplInstance;
 	private static MoteurEdition moteurEditionImplInstance;
 	private Command command;
@@ -45,15 +51,15 @@ public class MonAppli implements ActionListener {
 	 * 
 	 * @return MonAppli unique instance of the class
 	 */
-	public static MonAppli getInstance() {
+	public static Client getInstance() {
 		if (monAppli == null) {
-			monAppli = new MonAppli();
+			monAppli = new Client();
 		}
 		return monAppli;
 	}
 
 	public static void main(String[] args) {
-		monAppli = MonAppli.getInstance();
+		monAppli = Client.getInstance();
 		IHMImplInstance = IHMImpl.getInstance();
 		moteurEditionImplInstance = MoteurEditionImpl.getInstance();
 

@@ -1,4 +1,7 @@
-package fr.edu.istic.m1.miage.miniediteur;
+package fr.edu.istic.m1.miage.miniediteur.command;
+
+import fr.edu.istic.m1.miage.miniediteur.invoker.IHMImpl;
+
 /**
  * @(#) Couper.java
  */

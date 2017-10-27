@@ -1,4 +1,4 @@
-package fr.edu.istic.m1.miage.miniediteur;
+package fr.edu.istic.m1.miage.miniediteur.invoker;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -14,6 +14,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import fr.edu.istic.m1.miage.miniediteur.client.Client;
+import fr.edu.istic.m1.miage.miniediteur.command.Coller;
+import fr.edu.istic.m1.miage.miniediteur.command.Copier;
+import fr.edu.istic.m1.miage.miniediteur.command.Couper;
+import fr.edu.istic.m1.miage.miniediteur.command.InsText;
+import fr.edu.istic.m1.miage.miniediteur.receiver.Selection;
+
 /**
  * @author Diego Cardenas
  * @version 1.0
@@ -27,7 +34,7 @@ public class IHMImpl implements IHM {
 	 * class IHMImpl
 	 */
 	private static IHMImpl IHMImplInstance;
-	private static MonAppli monAppli;
+	private static Client monAppli;
 	private Couper couperSelection;
 	private Coller collerSelection;
 	private InsText insertText;
@@ -138,7 +145,7 @@ public class IHMImpl implements IHM {
 
 	public static IHMImpl getInstance() {
 		if (IHMImplInstance == null) {
-			monAppli = MonAppli.getInstance();
+			monAppli = Client.getInstance();
 			IHMImplInstance = new IHMImpl(monAppli);
 			IHMImplInstance.frmMiniEditeur.setVisible(true);
 		}

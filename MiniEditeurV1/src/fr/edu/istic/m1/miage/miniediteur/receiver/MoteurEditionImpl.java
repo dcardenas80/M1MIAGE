@@ -1,4 +1,4 @@
-package fr.edu.istic.m1.miage.miniediteur;
+package fr.edu.istic.m1.miage.miniediteur.receiver;
 /**
  * @author Diego Cardenas
  * @version 1.0
