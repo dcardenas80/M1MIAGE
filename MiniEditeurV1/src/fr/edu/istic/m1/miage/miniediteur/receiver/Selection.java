@@ -12,7 +12,7 @@ public class Selection implements Command
 	
 	private String position_fin;
 	
-	private MoteurEditionImpl maSelection2;
+	private EditorMotorImpl maSelection2;
 	
 	private int maSelection;
 	

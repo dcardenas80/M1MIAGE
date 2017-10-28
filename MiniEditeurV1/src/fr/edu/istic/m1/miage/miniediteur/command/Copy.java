@@ -1,15 +1,15 @@
 package fr.edu.istic.m1.miage.miniediteur.command;
 
 import fr.edu.istic.m1.miage.miniediteur.invoker.IHMImpl;
-import fr.edu.istic.m1.miage.miniediteur.receiver.MoteurEditionImpl;
+import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
 
 /**
  * @(#) Copier.java
  */
 
-public class Copier implements Command
+public class Copy implements Command
 {
-	private MoteurEditionImpl monCopier5;
+	private EditorMotorImpl monCopier5;
 	
 	private IHMImpl maCopier;
 

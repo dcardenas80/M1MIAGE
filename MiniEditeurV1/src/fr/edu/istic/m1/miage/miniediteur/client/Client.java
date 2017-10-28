@@ -13,11 +13,11 @@ import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
 import fr.edu.istic.m1.miage.miniediteur.command.Command;
-import fr.edu.istic.m1.miage.miniediteur.command.InsText;
+import fr.edu.istic.m1.miage.miniediteur.command.TextInsertion;
 import fr.edu.istic.m1.miage.miniediteur.invoker.IHM;
 import fr.edu.istic.m1.miage.miniediteur.invoker.IHMImpl;
-import fr.edu.istic.m1.miage.miniediteur.receiver.MoteurEdition;
-import fr.edu.istic.m1.miage.miniediteur.receiver.MoteurEditionImpl;
+import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotor;
+import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
 
 /**
  * @author Diego Cardenas
@@ -34,9 +34,9 @@ public class Client implements ActionListener, KeyListener, CaretListener {
 
 	private static Client client;
 	private static IHMImpl IHMImplInstance;
-	private static MoteurEdition moteurEditionImplInstance;
+	private static EditorMotor moteurEditionImplInstance;
 	private Command command;
-
+	private static final String[] keys= {"textInsertion"};
 	/**
 	 * this method registers all the action events inside the buttons in the
 	 * interface
@@ -87,8 +87,9 @@ public class Client implements ActionListener, KeyListener, CaretListener {
 		if (keyChar != '\b') /** if key typed is not a backspace */
 		{
 			IHMImplInstance.setLastChart(keyChar);
-			command = new InsText();
-			IHMImplInstance.setCommand("textInsertion", command);
+			command = new TextInsertion();
+			moteurEditionImplInstance.attach(IHMImplInstance);
+			IHMImplInstance.setCommand(keys[0], command);
 			
 		}
 
@@ -97,7 +98,7 @@ public class Client implements ActionListener, KeyListener, CaretListener {
 	public static void main(String[] args) {
 		client = Client.getInstance();
 		IHMImplInstance = IHMImpl.getInstance();
-		moteurEditionImplInstance = MoteurEditionImpl.getInstance();
+		moteurEditionImplInstance = EditorMotorImpl.getInstance();
 
 	}
 
