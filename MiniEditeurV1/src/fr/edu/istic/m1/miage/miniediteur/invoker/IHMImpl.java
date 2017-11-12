@@ -9,19 +9,14 @@ import java.awt.event.KeyListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.event.CaretListener;
 
 import fr.edu.istic.m1.miage.miniediteur.client.Client;
-import fr.edu.istic.m1.miage.miniediteur.command.Paste;
 import fr.edu.istic.m1.miage.miniediteur.command.Command;
-import fr.edu.istic.m1.miage.miniediteur.command.Copy;
-import fr.edu.istic.m1.miage.miniediteur.command.Cut;
-import fr.edu.istic.m1.miage.miniediteur.command.TextInsertion;
-import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotor;
 import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
-import fr.edu.istic.m1.miage.miniediteur.receiver.Selection;
 
 /**
  * @author Diego Cardenas
@@ -36,63 +31,71 @@ public class IHMImpl implements IHM {
 	private static EditorMotorImpl editorMotorImpl;
 	private int selectionOrigin;
 	private int selectionSize;
-	private String text;
 	private char lastChart;
-	private Cut couperSelection;
-	private Paste collerSelection;
-	private TextInsertion insertText;
-	private Selection texteSelection;
-	private Copy copierSelection;
-	private String textToInsert;
-	private JFrame frmMiniEditeur;
-    private JTextArea pnlText;
+	private Command command;
+
+	private JFrame frmTextProcessor;
+	private JTextArea pnlText;
+	private static final int textAreaRows = 20;
+	private static final int textAreaCols = 60;
+
 	private IHMImpl(ActionListener actionListener, CaretListener caretListener, KeyListener keyListener) {
 		initialize(actionListener, caretListener, keyListener);
-
+		frmTextProcessor.pack();
+		frmTextProcessor.setLocationRelativeTo(null);
+		pnlText.requestFocusInWindow();
 	}
 
-
 	private void initialize(ActionListener actionListener, CaretListener caretListener, KeyListener keyListener) {
-		frmMiniEditeur = new JFrame();
-		frmMiniEditeur.setTitle("Mini Editeur");
-		frmMiniEditeur.setForeground(Color.GRAY);
-		frmMiniEditeur.setBackground(Color.GRAY);
-		frmMiniEditeur.setBounds(100, 100, 650, 500);
-		frmMiniEditeur.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmTextProcessor = new JFrame();
+		frmTextProcessor.setTitle("Mini Editeur");
+		frmTextProcessor.setForeground(Color.GRAY);
+		frmTextProcessor.setBackground(Color.GRAY);
+		frmTextProcessor.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JPanel pnlBorder = new JPanel();
-		frmMiniEditeur.getContentPane().add(pnlBorder, BorderLayout.NORTH);
+		frmTextProcessor.getContentPane().add(pnlBorder, BorderLayout.NORTH);
 		pnlBorder.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
-
-		JButton btnIns = new JButton("Ins\u00E9rer Texte");
-		btnIns.setVerticalAlignment(SwingConstants.TOP);
-		btnIns.addActionListener(actionListener);
-
-		pnlBorder.add(btnIns);
+		JButton btnCopy = new JButton("Copier Texte");
+		btnCopy.setVerticalAlignment(SwingConstants.TOP);
+		btnCopy.addActionListener(actionListener);
+		JButton btnPaste = new JButton("Coller Texte");
+		btnPaste.setVerticalAlignment(SwingConstants.TOP);
+		btnPaste.addActionListener(actionListener);
+		JButton btnCut = new JButton("Couper Texte");
+		btnCut.setVerticalAlignment(SwingConstants.TOP);
+		btnCut.addActionListener(actionListener);
+		pnlBorder.add(btnCopy);
+		pnlBorder.add(btnPaste);
+		pnlBorder.add(btnCut);
 		pnlText = new JTextArea();
 		pnlText.addCaretListener(caretListener);
 		pnlText.addKeyListener(keyListener);
 		pnlText.setBackground(Color.WHITE);
-		frmMiniEditeur.getContentPane().add(pnlText, BorderLayout.CENTER);
+		pnlText.setLineWrap(true);
+		pnlText.setColumns(textAreaCols);
+		pnlText.setRows(textAreaRows);
+
+		JScrollPane scrollPane = new JScrollPane(pnlText);
+		frmTextProcessor.getContentPane().add(scrollPane, BorderLayout.CENTER);
 
 	}
 
 	public static IHMImpl getInstance() {
 		if (IHMImplInstance == null) {
 			client = Client.getInstance();
-			IHMImplInstance = new IHMImpl(client,client,client);
-			IHMImplInstance.frmMiniEditeur.setVisible(true);
+			IHMImplInstance = new IHMImpl(client, client, client);
+			IHMImplInstance.frmTextProcessor.setVisible(true);
 		}
 		return IHMImplInstance;
 	}
+
 	@Override
-	public void setCommand(String key, Command command) {
+	public void setCommand(Command command) {
 		// TODO Auto-generated method stub
-		if(key.contentEquals("textInsertion")) {
-			insertText = (TextInsertion) command;
-			insertText.execute();
-		}
-		
+		this.command = command;
+		this.command.execute();
+
 	}
 
 	/**
@@ -115,14 +118,6 @@ public class IHMImpl implements IHM {
 		this.selectionSize = selectionSize;
 	}
 
-	public String getText() {
-		return text;
-	}
-
-	public void setText(String text) {
-		this.text = text;
-	}
-
 	public char getLastChart() {
 		return lastChart;
 	}
@@ -131,20 +126,37 @@ public class IHMImpl implements IHM {
 		this.lastChart = lastChart;
 	}
 
-	public String getTextToInsert() {
-		return textToInsert;
-	}
-
-	public void setTextToInsert(String textToInsert) {
-		this.textToInsert = textToInsert;
-	}
-
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
+    
 		editorMotorImpl = EditorMotorImpl.getInstance();
-		pnlText.setText(editorMotorImpl.getBuffer().toString());
+		if (!editorMotorImpl.isSelection()) {
+
+			int caretPosition = editorMotorImpl.getCaret();
+			pnlText.setText(editorMotorImpl.getBuffer().toString());
+			pnlText.setCaretPosition(caretPosition);
+
+		} else {
+			int selectionStart, selectionSize = 0;
+			selectionStart = editorMotorImpl.getSelectionOrigin();
+			selectionSize =  editorMotorImpl.getSelectionSize();
+		
+				pnlText.setSelectionStart(selectionStart);
+				pnlText.setSelectionEnd(selectionStart+selectionSize);
+				
+
+
+		}
+		pnlText.requestFocusInWindow();
 	}
 
+	public JTextArea getPnlText() {
+		return pnlText;
+	}
+
+	public void setPnlText(JTextArea pnlText) {
+		this.pnlText = pnlText;
+	}
 
 }
