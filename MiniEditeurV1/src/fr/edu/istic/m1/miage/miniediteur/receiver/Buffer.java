@@ -34,7 +34,7 @@ public class Buffer {
 		return motorText;
 	}
 
-	public void deleteText() {
+	public void deleteText() throws StringIndexOutOfBoundsException {
 		motorText.deleteCharAt(caretPosition);
 		int lenght = getCaretPosition();
 		setCaretPosition(lenght);
@@ -51,7 +51,7 @@ public class Buffer {
 	public void append(char texte) {
 		// TODO Auto-generated method stub
 		if (texte == '\n') {
-			motorText.insert(getCaretPosition(), System.getProperty("line.separator"));
+			motorText.insert(getCaretPosition() - 1, System.getProperty("line.separator"));
 
 		} else {
 			motorText.insert(getCaretPosition(), texte);

@@ -23,8 +23,12 @@ public class DeleteText implements Command {
 		  ihmImpl = IHMImpl.getInstance();
 		  editorMotorImpl = EditorMotorImpl.getInstance();
 		  editorMotorImpl.setCaret(ihmImpl.getPnlText().getCaretPosition());
-		  editorMotorImpl.deleteText();
-
+		  try {
+			  editorMotorImpl.deleteText();
+		  }catch (Exception e) {
+			// TODO: handle exception
+		}
+		 
 	}
 
 }

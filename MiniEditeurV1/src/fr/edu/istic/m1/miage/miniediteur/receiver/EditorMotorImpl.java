@@ -63,7 +63,7 @@ public class EditorMotorImpl implements EditorMotor {
 	}
 
 	@Override
-	public void deleteText() {
+	public void deleteText() throws StringIndexOutOfBoundsException {
 		// TODO Auto-generated method stub
 		selection.setSelection(false);
 	    textMoteur.deleteText();
