@@ -8,13 +8,22 @@ import fr.edu.istic.m1.miage.miniediteur.invoker.IHM;
  */
 
 public interface EditorMotor {
-	void selection();
+	public void setSelection(int selectionOrigin, int selectionSize);
 
-	void coller();
+	public void pasteText();
+	public void copyText(int selectionOrigin,  int selectionSize);
+	public void cutText(int selectionOrigin, int selectionSize);
+	public void insertText(char text);
 
-	void copier();
-
-	void insTexte(char texte);
+	public void deleteText();
+	public int getSelectionSize();
+	public int getSelectionOrigin();
+	public void setCaret(int caretPostion);
+    /**
+     * return the caretPosition to set 
+     * @return caretPosition
+     */
+	public int getCaret();
 
 	/**
 	 * Notify all the observer.

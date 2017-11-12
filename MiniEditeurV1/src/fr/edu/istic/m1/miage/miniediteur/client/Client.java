@@ -5,16 +5,16 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
 import fr.edu.istic.m1.miage.miniediteur.command.Command;
-import fr.edu.istic.m1.miage.miniediteur.command.TextInsertion;
-import fr.edu.istic.m1.miage.miniediteur.invoker.IHM;
+import fr.edu.istic.m1.miage.miniediteur.command.CopyText;
+import fr.edu.istic.m1.miage.miniediteur.command.CutText;
+import fr.edu.istic.m1.miage.miniediteur.command.DeleteText;
+import fr.edu.istic.m1.miage.miniediteur.command.InsertText;
+import fr.edu.istic.m1.miage.miniediteur.command.PasteText;
+import fr.edu.istic.m1.miage.miniediteur.command.SelectText;
 import fr.edu.istic.m1.miage.miniediteur.invoker.IHMImpl;
 import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotor;
 import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
@@ -34,18 +34,27 @@ public class Client implements ActionListener, KeyListener, CaretListener {
 
 	private static Client client;
 	private static IHMImpl IHMImplInstance;
-	private static EditorMotor moteurEditionImplInstance;
+	private static EditorMotor editorMotorImpl;
 	private Command command;
-	private static final String[] keys= {"textInsertion"};
+	private static final String[] buttonsKeys = { "Copier Texte", "Coller Texte", "Couper Texte" };
+
 	/**
 	 * this method registers all the action events inside the buttons in the
 	 * interface
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String btnId = e.getActionCommand();
-		if (btnId.contentEquals("Insérer Texte")) {
 
+		String btnId = e.getActionCommand();
+		if (btnId.contentEquals(buttonsKeys[0])) {
+			command = new CopyText();
+			IHMImplInstance.setCommand(command);
+		} else if (btnId.contentEquals(buttonsKeys[1])) {
+			command = new PasteText();
+			IHMImplInstance.setCommand(command);
+		} else if (btnId.contentEquals(buttonsKeys[2])) {
+			command = new CutText();
+			IHMImplInstance.setCommand(command);
 		}
 
 	}
@@ -62,9 +71,28 @@ public class Client implements ActionListener, KeyListener, CaretListener {
 		return client;
 	}
 
+	/**
+	 * this method listen all the updates on the caret and if the update is a
+	 * selection demands the execution of the selectText command by the invoker
+	 */
 	@Override
 	public void caretUpdate(CaretEvent e) {
 		// TODO Auto-generated method stub
+
+		int selectionOrigin = Math.min(e.getDot(), e.getMark());
+		int selectionEnd = Math.max(e.getDot(), e.getMark());
+		int selectionSize = selectionEnd - selectionOrigin;
+		if (selectionSize != 0) {
+			if (selectionOrigin != IHMImplInstance.getSelectionOrigin()
+					|| selectionSize != IHMImplInstance.getSelectionSize()) {
+				IHMImplInstance.setSelectionOrigin(selectionOrigin);
+				IHMImplInstance.setSelectionSize(selectionSize);
+				command = new SelectText();
+				IHMImplInstance.setCommand(command);
+
+			}
+
+		}
 
 	}
 
@@ -86,11 +114,14 @@ public class Client implements ActionListener, KeyListener, CaretListener {
 		char keyChar = e.getKeyChar();
 		if (keyChar != '\b') /** if key typed is not a backspace */
 		{
+
 			IHMImplInstance.setLastChart(keyChar);
-			command = new TextInsertion();
-			moteurEditionImplInstance.attach(IHMImplInstance);
-			IHMImplInstance.setCommand(keys[0], command);
-			
+			command = new InsertText();
+			IHMImplInstance.setCommand(command);
+
+		} else if (keyChar == '\b') {
+			command = new DeleteText();
+			IHMImplInstance.setCommand(command);
 		}
 
 	}
@@ -98,8 +129,8 @@ public class Client implements ActionListener, KeyListener, CaretListener {
 	public static void main(String[] args) {
 		client = Client.getInstance();
 		IHMImplInstance = IHMImpl.getInstance();
-		moteurEditionImplInstance = EditorMotorImpl.getInstance();
-
+		editorMotorImpl = EditorMotorImpl.getInstance();
+		editorMotorImpl.attach(IHMImplInstance);
 	}
 
 }

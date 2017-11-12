@@ -1,7 +1,6 @@
 package fr.edu.istic.m1.miage.miniediteur.invoker;
 
 import fr.edu.istic.m1.miage.miniediteur.command.Command;
-import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotor;
 
 /**
  * @author Diego Cardenas
@@ -15,7 +14,7 @@ public interface IHM
 	 * @param key  key that identifies the concrete command
 	 * @param command concrete command to be set
 	 */
-	public void setCommand (String key, Command command);
+	public void setCommand (Command command);
 	
 	public void update();
 	

@@ -1,36 +1,39 @@
 package fr.edu.istic.m1.miage.miniediteur.receiver;
 
-import fr.edu.istic.m1.miage.miniediteur.command.Command;
-
 /**
  * @(#) Selection.java
  */
 
-public class Selection implements Command
+public class Selection 
 {
-	private String position_debut;
 	
-	private String position_fin;
-	
-	private EditorMotorImpl maSelection2;
-	
-	private int maSelection;
-	
-	public void getSelection( )
-	{
-		
+	private int selectionOrigin;
+	private int selectionSize;
+	private boolean isSelection;
+	public boolean isSelection() {
+		return isSelection;
 	}
-	
-	public void setSelection( )
-	{
-		
+	public void setSelection(boolean isSelection) {
+		this.isSelection = isSelection;
+	}
+	public int getSelectionOrigin() {
+		return selectionOrigin;
+	}
+	public void setSelectionOrigin(int selectionOrigin) {
+		this.selectionOrigin = selectionOrigin;
+	}
+	public int getSelectionSize() {
+		return selectionSize;
+	}
+	public void setSelectionSize(int selectionSize) {
+		this.selectionSize = selectionSize;
 	}
 
-	@Override
-	public void execute() {
-		// TODO Auto-generated method stub
-		
-	}
+	
+	
+	
+
+
 	
 	
 }
