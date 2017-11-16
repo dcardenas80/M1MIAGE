@@ -1,5 +1,7 @@
 package fr.edu.istic.m1.miage.miniediteur.receiver;
 
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -22,6 +24,7 @@ public class EditorMotorImpl implements EditorMotor {
 	private Selection selection;
 	private Collection<IHM> ihmObservers;
 	private ClipBoard clipBoard;
+
 	private EditorMotorImpl() {
 		this.textMoteur = new Buffer();
 		this.ihmObservers = new ArrayList<IHM>();
@@ -65,8 +68,11 @@ public class EditorMotorImpl implements EditorMotor {
 	@Override
 	public void deleteText() throws StringIndexOutOfBoundsException {
 		// TODO Auto-generated method stub
+		if (selection.isSelection()) {
+			textMoteur.cutText(getSelectionOrigin(), getSelectionSize());
+		}
 		selection.setSelection(false);
-	    textMoteur.deleteText();
+		textMoteur.deleteText();
 		notifyObservers();
 	}
 
@@ -77,7 +83,7 @@ public class EditorMotorImpl implements EditorMotor {
 		while (iterator.hasNext()) {
 			IHM ihm = iterator.next();
 			ihm.update();
-			
+
 		}
 
 	}
@@ -128,37 +134,34 @@ public class EditorMotorImpl implements EditorMotor {
 	}
 
 	@Override
-	public void pasteText() {
+	public void pasteText() throws UnsupportedFlavorException, IOException {
 		// TODO Auto-generated method stub
 		selection.setSelection(false);
 		textMoteur.append(clipBoard.getContent());
+		notifyObservers();
+	}
+
+	@Override
+	public void copyText() {
+		// TODO Auto-generated method stub
+		selection.setSelection(false);
+		if (getSelectionSize() > 0) {
+			String textClipBoard = textMoteur.copyText(getSelectionOrigin(), getSelectionSize());
+			clipBoard.setContent(textClipBoard);
+
+		}
 
 		notifyObservers();
 	}
 
 	@Override
-	public void copyText(int selectionOrigin,  int selectionSize) {
+	public void cutText() {
 		// TODO Auto-generated method stub
 		selection.setSelection(false);
-		if (selectionSize>0) {
-			String textClipBoard= textMoteur.copyText(selectionOrigin,selectionSize);
+		if (getSelectionSize() > 0) {
+			String textClipBoard = textMoteur.cutText(getSelectionOrigin(), getSelectionSize());
 			clipBoard.setContent(textClipBoard);
-			
 		}
-	
-		notifyObservers();
-	}
-
-	@Override
-	public void cutText(int selectionOrigin, int selectionSize) {
-		// TODO Auto-generated method stub
-		selection.setSelection(false);
-		if (selectionSize>0) {
-			String textClipBoard= textMoteur.cutText(selectionOrigin,selectionSize);
-			clipBoard.setContent(textClipBoard);
-			
-		}
-	
 		notifyObservers();
 	}
 

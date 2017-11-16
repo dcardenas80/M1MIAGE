@@ -15,13 +15,15 @@ public class CutText implements Command
 	private IHMImpl ihmImpl;
 	private EditorMotorImpl editorMotorImpl;
 	@Override
+
+	/**
+	 * Execute method for the command CutText
+	 */
 	public void execute() {
 		// TODO Auto-generated method stub
 		ihmImpl = IHMImpl.getInstance();
-		int selectionOrigin = ihmImpl.getPnlText().getSelectionStart();
-		int selectionEnd	= ihmImpl.getPnlText().getSelectionEnd();
 		editorMotorImpl = EditorMotorImpl.getInstance();
-		editorMotorImpl.cutText(selectionOrigin, selectionEnd-selectionOrigin);
+		editorMotorImpl.cutText();
 	}
 	
 

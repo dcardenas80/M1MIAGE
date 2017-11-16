@@ -22,11 +22,10 @@ public class DeleteText implements Command {
 		// TODO Auto-generated method stub
 		  ihmImpl = IHMImpl.getInstance();
 		  editorMotorImpl = EditorMotorImpl.getInstance();
-		  editorMotorImpl.setCaret(ihmImpl.getPnlText().getCaretPosition());
 		  try {
 			  editorMotorImpl.deleteText();
 		  }catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 		 
 	}
