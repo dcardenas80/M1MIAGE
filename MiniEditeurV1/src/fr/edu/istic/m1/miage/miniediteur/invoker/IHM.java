@@ -7,15 +7,21 @@ import fr.edu.istic.m1.miage.miniediteur.command.Command;
  * @version 1.0
  */
 
-public interface IHM
-{
+public interface IHM {
 	/**
-	 *  sets and executes the commands
-	 * @param key  key that identifies the concrete command
-	 * @param command concrete command to be set
+	 * sets and executes the commands
+	 * 
+	 * @param key
+	 *            key that identifies the concrete command
+	 * @param command
+	 *            concrete command to be set
 	 */
-	public void setCommand (Command command);
-	
+	public void setCommand(Command command);
+
+	/**
+	 * this method is part of the Observer pattern, and is charged of the update of
+	 * the observer when it is notified by the subject
+	 */
 	public void update();
-	
+
 }

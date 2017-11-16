@@ -12,15 +12,19 @@ import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
  */
 
 public class CopyText implements Command {
+	
 	private IHMImpl ihmImpl;
 	private EditorMotorImpl editorMotorImpl;
 	@Override
+	
+
+	/**
+	 * Execute method for the command CopyText
+	 */
 	public void execute() {
 		// TODO Auto-generated method stub
 		ihmImpl = IHMImpl.getInstance();
-		int selectionOrigin = ihmImpl.getPnlText().getSelectionStart();
-		int selectionEnd	= ihmImpl.getPnlText().getSelectionEnd();
 		editorMotorImpl = EditorMotorImpl.getInstance();
-		editorMotorImpl.copyText(selectionOrigin, selectionEnd-selectionOrigin);
+		editorMotorImpl.copyText();
 	}
 }

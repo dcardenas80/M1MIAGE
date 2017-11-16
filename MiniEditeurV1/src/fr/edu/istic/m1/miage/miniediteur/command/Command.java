@@ -1,9 +1,19 @@
 package fr.edu.istic.m1.miage.miniediteur.command;
 /**
- * @(#) Command.java
+ * @author Diego Cardenas
+ * @version 1.0
  */
 
-public interface Command
-{
+/**
+ * Command interface used in the concrete commands of the text Editor
+ * 
+ * @author Diego
+ *
+ */
+public interface Command {
+
+	/**
+	 * This method is used for execute the command
+	 */
 	public void execute();
 }

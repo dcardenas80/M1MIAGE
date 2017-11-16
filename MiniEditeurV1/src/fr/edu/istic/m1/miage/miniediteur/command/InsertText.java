@@ -15,12 +15,13 @@ public class InsertText implements Command {
 	private IHMImpl ihmImpl;
 	private EditorMotorImpl editorMotorImpl;
 	
-    
+	/**
+	 * Execute method for the command InsertText
+	 */
 	@Override
 	public void execute() {
 	   ihmImpl = IHMImpl.getInstance();
 	   editorMotorImpl = EditorMotorImpl.getInstance();
-	   editorMotorImpl.setCaret(ihmImpl.getPnlText().getCaretPosition());
 	   editorMotorImpl.insertText(ihmImpl.getLastChart());
 
 	}

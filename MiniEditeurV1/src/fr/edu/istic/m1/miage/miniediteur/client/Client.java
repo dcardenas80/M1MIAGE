@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.KeyStroke;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
@@ -99,7 +100,18 @@ public class Client implements ActionListener, KeyListener, CaretListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-
+		e.consume();
+		if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_C) {
+			command = new CopyText();
+			IHMImplInstance.setCommand(command);
+		} else if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_X) {
+			command = new CutText();
+			IHMImplInstance.setCommand(command);
+		} else if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_V) {
+			command = new PasteText();
+			IHMImplInstance.setCommand(command);
+		}
+		
 	}
 
 	@Override
@@ -108,22 +120,29 @@ public class Client implements ActionListener, KeyListener, CaretListener {
 
 	}
 
+	/**
+	 * if a key is typed this methods verifies if it is a letter or a backspace
+	 */
 	@Override
 	public void keyTyped(KeyEvent e) {
 		e.consume();
+		int modifier = e.getModifiersEx();
 		char keyChar = e.getKeyChar();
-		if (keyChar != '\b') /** if key typed is not a backspace */
-		{
+		
+		if ( modifier != KeyEvent.VK_DEAD_GRAVE ) {
 
-			IHMImplInstance.setLastChart(keyChar);
-			command = new InsertText();
-			IHMImplInstance.setCommand(command);
+			if (keyChar != '\b') /** if key typed is not a backspace */
+			{
 
-		} else if (keyChar == '\b') {
-			command = new DeleteText();
-			IHMImplInstance.setCommand(command);
+				IHMImplInstance.setLastChart(keyChar);
+				command = new InsertText();
+				IHMImplInstance.setCommand(command);
+
+			} else if (keyChar == '\b') {
+				command = new DeleteText();
+				IHMImplInstance.setCommand(command);
+			}
 		}
-
 	}
 
 	public static void main(String[] args) {

@@ -4,13 +4,16 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.ActionMap;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.event.CaretListener;
 
@@ -20,7 +23,7 @@ import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
 
 /**
  * @author Diego Cardenas
- * @version 1.0
+ * @version 2.0
  * 
  */
 
@@ -39,6 +42,14 @@ public class IHMImpl implements IHM {
 	private static final int textAreaRows = 20;
 	private static final int textAreaCols = 60;
 
+	/**
+	 * Constructor of the IHMImpl Class it receives three listeners charged of the
+	 * events on the GUI
+	 * 
+	 * @param actionListener
+	 * @param caretListener
+	 * @param keyListener
+	 */
 	private IHMImpl(ActionListener actionListener, CaretListener caretListener, KeyListener keyListener) {
 		initialize(actionListener, caretListener, keyListener);
 		frmTextProcessor.pack();
@@ -46,6 +57,13 @@ public class IHMImpl implements IHM {
 		pnlText.requestFocusInWindow();
 	}
 
+	/**
+	 * initialize of the GUI sets components like bottons and text areas.
+	 * 
+	 * @param actionListener
+	 * @param caretListener
+	 * @param keyListener
+	 */
 	private void initialize(ActionListener actionListener, CaretListener caretListener, KeyListener keyListener) {
 		frmTextProcessor = new JFrame();
 		frmTextProcessor.setTitle("Mini Editeur");
@@ -78,9 +96,15 @@ public class IHMImpl implements IHM {
 
 		JScrollPane scrollPane = new JScrollPane(pnlText);
 		frmTextProcessor.getContentPane().add(scrollPane, BorderLayout.CENTER);
-
+		
+		
 	}
 
+	/**
+	 * Lazy implementation of Singleton pattern
+	 * 
+	 * @return
+	 */
 	public static IHMImpl getInstance() {
 		if (IHMImplInstance == null) {
 			client = Client.getInstance();
@@ -90,6 +114,10 @@ public class IHMImpl implements IHM {
 		return IHMImplInstance;
 	}
 
+	/**
+	 * concrete implementation of setCommand method, receives a object of type
+	 * command and calls its execute method
+	 */
 	@Override
 	public void setCommand(Command command) {
 		// TODO Auto-generated method stub
@@ -129,23 +157,22 @@ public class IHMImpl implements IHM {
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-    
+
 		editorMotorImpl = EditorMotorImpl.getInstance();
 		if (!editorMotorImpl.isSelection()) {
 
 			int caretPosition = editorMotorImpl.getCaret();
+			System.out.println(editorMotorImpl.getBuffer().toString());
 			pnlText.setText(editorMotorImpl.getBuffer().toString());
 			pnlText.setCaretPosition(caretPosition);
 
 		} else {
 			int selectionStart, selectionSize = 0;
 			selectionStart = editorMotorImpl.getSelectionOrigin();
-			selectionSize =  editorMotorImpl.getSelectionSize();
-		
-				pnlText.setSelectionStart(selectionStart);
-				pnlText.setSelectionEnd(selectionStart+selectionSize);
-				
+			selectionSize = editorMotorImpl.getSelectionSize();
 
+			pnlText.setSelectionStart(selectionStart);
+			pnlText.setSelectionEnd(selectionStart + selectionSize);
 
 		}
 		pnlText.requestFocusInWindow();
