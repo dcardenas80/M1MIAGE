@@ -3,11 +3,13 @@ package fr.edu.istic.m1.miage.miniediteur.invoker;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.ActionMap;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -73,16 +75,19 @@ public class IHMImpl implements IHM {
 
 		JPanel pnlBorder = new JPanel();
 		frmTextProcessor.getContentPane().add(pnlBorder, BorderLayout.NORTH);
-		pnlBorder.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
+		pnlBorder.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		JButton btnCopy = new JButton("Copier Texte");
 		btnCopy.setVerticalAlignment(SwingConstants.TOP);
 		btnCopy.addActionListener(actionListener);
+		btnCopy.setIcon(new ImageIcon(("icons/copyIcon.png")));
 		JButton btnPaste = new JButton("Coller Texte");
 		btnPaste.setVerticalAlignment(SwingConstants.TOP);
 		btnPaste.addActionListener(actionListener);
+		btnPaste.setIcon(new ImageIcon(("icons/pasteIcon.png")));
 		JButton btnCut = new JButton("Couper Texte");
 		btnCut.setVerticalAlignment(SwingConstants.TOP);
 		btnCut.addActionListener(actionListener);
+		btnCut.setIcon(new ImageIcon(("icons/cutIcon.png")));
 		pnlBorder.add(btnCopy);
 		pnlBorder.add(btnPaste);
 		pnlBorder.add(btnCut);
@@ -162,7 +167,6 @@ public class IHMImpl implements IHM {
 		if (!editorMotorImpl.isSelection()) {
 
 			int caretPosition = editorMotorImpl.getCaret();
-			System.out.println(editorMotorImpl.getBuffer().toString());
 			pnlText.setText(editorMotorImpl.getBuffer().toString());
 			pnlText.setCaretPosition(caretPosition);
 
@@ -178,12 +182,8 @@ public class IHMImpl implements IHM {
 		pnlText.requestFocusInWindow();
 	}
 
-	public JTextArea getPnlText() {
-		return pnlText;
-	}
 
-	public void setPnlText(JTextArea pnlText) {
-		this.pnlText = pnlText;
+	public int getCaretPosition() {
+		return pnlText.getCaretPosition();
 	}
-
 }
