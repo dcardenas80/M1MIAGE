@@ -22,6 +22,7 @@ public class InsertText implements Command {
 	public void execute() {
 	   ihmImpl = IHMImpl.getInstance();
 	   editorMotorImpl = EditorMotorImpl.getInstance();
+	   editorMotorImpl.setCaret(ihmImpl.getCaretPosition());
 	   editorMotorImpl.insertText(ihmImpl.getLastChart());
 
 	}
