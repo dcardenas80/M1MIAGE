@@ -14,18 +14,19 @@ import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
  *          PasteText
  */
 public class PasteText implements Command {
-	private IHMImpl ihmImpl;
+	
 	private EditorMotorImpl editorMotorImpl;
-
+    private IHMImpl ihmImpl;
 	/**
 	 * Execute method for the command PasteText
 	 */
 	@Override
 	public void execute() {
-		ihmImpl = IHMImpl.getInstance();
 		editorMotorImpl = EditorMotorImpl.getInstance();
-		
+		ihmImpl = IHMImpl.getInstance();
+
 		try {
+			editorMotorImpl.setCaret(ihmImpl.getCaretPosition());
 			editorMotorImpl.pasteText();
 		} catch (UnsupportedFlavorException | IOException e) {
 			// TODO Auto-generated catch block

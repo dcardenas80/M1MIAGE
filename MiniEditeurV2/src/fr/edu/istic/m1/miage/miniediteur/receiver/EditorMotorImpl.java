@@ -24,7 +24,9 @@ public class EditorMotorImpl implements EditorMotor {
 	private Selection selection;
 	private Collection<IHM> ihmObservers;
 	private ClipBoard clipBoard;
-
+	/**
+	 * Private constructor of the EditorMotorImpl class
+	 */
 	private EditorMotorImpl() {
 		this.textMoteur = new Buffer();
 		this.ihmObservers = new ArrayList<IHM>();
@@ -52,9 +54,7 @@ public class EditorMotorImpl implements EditorMotor {
 		selection.setSelectionOrigin(selectionOrigin);
 		selection.setSelectionSize(selectionEnd);
 		selection.setSelection(true);
-
 		notifyObservers();
-
 	}
 
 	@Override
@@ -101,7 +101,12 @@ public class EditorMotorImpl implements EditorMotor {
 		ihmObservers.remove(ihm);
 	}
 
-	public StringBuffer getBuffer() {
+	/**
+	 * This method returns a String with the text of the Editor's buffer
+	 * 
+	 * @return a String with the text on the Editor's buffer
+	 */
+	public String getBuffer() {
 
 		return textMoteur.getMotorText();
 
@@ -117,6 +122,11 @@ public class EditorMotorImpl implements EditorMotor {
 		return textMoteur.getCaretPosition();
 	}
 
+	/**
+	 * This method verifies if the action to do is a selection
+	 * 
+	 * @return a boolean with true if is a selection false in the other case
+	 */
 	public boolean isSelection() {
 		return selection.isSelection();
 	}
@@ -152,6 +162,10 @@ public class EditorMotorImpl implements EditorMotor {
 		}
 
 		notifyObservers();
+	}
+
+	public int getBufferLenght() {
+		return textMoteur.getLenght();
 	}
 
 	@Override

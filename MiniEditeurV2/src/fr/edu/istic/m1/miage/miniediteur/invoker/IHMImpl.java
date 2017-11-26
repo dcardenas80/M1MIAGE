@@ -3,19 +3,15 @@ package fr.edu.istic.m1.miage.miniediteur.invoker;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.Image;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import javax.swing.ActionMap;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.event.CaretListener;
 
@@ -38,23 +34,27 @@ public class IHMImpl implements IHM {
 	private int selectionSize;
 	private char lastChart;
 	private Command command;
-
 	private JFrame frmTextProcessor;
 	private JTextArea pnlText;
-	private static final int textAreaRows = 20;
-	private static final int textAreaCols = 60;
+	private static final int textAreaRows = 30;
+	private static final int textAreaCols = 80;
 	private JButton btnCut;
 	private JButton btnCopy;
 	private JButton btnPaste;
 	private JButton btnRecording;
+	private JButton btnReplay;
 
 	/**
-	 * Constructor of the IHMImpl Class it receives three listeners charged of the
-	 * events on the GUI
+	 * private Constructor of the IHMImpl Class it receives three listeners charged
+	 * of the events on the GUI
 	 * 
 	 * @param actionListener
+	 *            - an action listener for the actions on the buttons
 	 * @param caretListener
+	 *            - the caret listener charge of the updates on the caret for the
+	 *            panel text
 	 * @param keyListener
+	 *            - a listener for the keyboard actions
 	 */
 	private IHMImpl(ActionListener actionListener, CaretListener caretListener, KeyListener keyListener) {
 		initialize(actionListener, caretListener, keyListener);
@@ -67,8 +67,12 @@ public class IHMImpl implements IHM {
 	 * initialize of the GUI sets components like buttons and text areas.
 	 * 
 	 * @param actionListener
+	 *            - an action listener for the actions on the buttons
 	 * @param caretListener
+	 *            - the caret listener charge of the updates on the caret for the
+	 *            panel text
 	 * @param keyListener
+	 *            - a listener for the keyboard actions
 	 */
 	private void initialize(ActionListener actionListener, CaretListener caretListener, KeyListener keyListener) {
 		frmTextProcessor = new JFrame();
@@ -79,7 +83,7 @@ public class IHMImpl implements IHM {
 
 		JPanel pnlBorder = new JPanel();
 		frmTextProcessor.getContentPane().add(pnlBorder, BorderLayout.NORTH);
-		pnlBorder.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
+		pnlBorder.setLayout(new FlowLayout(FlowLayout.CENTER, 80, 10));
 		btnCopy = new JButton("Copier Texte");
 		btnCopy.setVerticalAlignment(SwingConstants.TOP);
 		btnCopy.addActionListener(actionListener);
@@ -96,10 +100,16 @@ public class IHMImpl implements IHM {
 		btnRecording.setVerticalAlignment(SwingConstants.TOP);
 		btnRecording.addActionListener(actionListener);
 		btnRecording.setIcon(new ImageIcon("icons/recordIcon.png"));
+		btnReplay = new JButton("Rejouer");
+		btnReplay.setVerticalAlignment(SwingConstants.TOP);
+		btnReplay.addActionListener(actionListener);
+		btnReplay.setIcon(new ImageIcon("icons/playIcon.png"));
+		btnReplay.setEnabled(false);
 		pnlBorder.add(btnCopy);
 		pnlBorder.add(btnPaste);
 		pnlBorder.add(btnCut);
 		pnlBorder.add(btnRecording);
+		pnlBorder.add(btnReplay);
 		pnlText = new JTextArea();
 		pnlText.addCaretListener(caretListener);
 		pnlText.addKeyListener(keyListener);
@@ -116,7 +126,7 @@ public class IHMImpl implements IHM {
 	/**
 	 * Lazy implementation of Singleton pattern
 	 * 
-	 * @return
+	 * @return an instance of the IHMImpl class
 	 */
 	public static IHMImpl getInstance() {
 		if (IHMImplInstance == null) {
@@ -138,14 +148,21 @@ public class IHMImpl implements IHM {
 		this.command.execute();
 
 	}
-
 	/**
-	 * Getters and Setters
+	 * get the point where a selection begins
+	 * 
+	 * @return an integer with the value of the initial position
 	 */
-
 	public int getSelectionOrigin() {
 		return selectionOrigin;
 	}
+
+	/**
+	 * sets the initial point of a selection on the IHM
+	 * 
+	 * @param selectionOrigin
+	 *            - the initial point
+	 */
 
 	public void setSelectionOrigin(int selectionOrigin) {
 		this.selectionOrigin = selectionOrigin;
@@ -159,14 +176,28 @@ public class IHMImpl implements IHM {
 		this.selectionSize = selectionSize;
 	}
 
+	/**
+	 * returns the last chart typed by the user
+	 * 
+	 * @return a char that contains the last typed char by the client
+	 */
 	public char getLastChart() {
 		return lastChart;
 	}
 
+	/**
+	 * sets the last char that the users has typed
+	 * 
+	 * @param lastChart
+	 *            - the last char typed
+	 */
 	public void setLastChart(char lastChart) {
 		this.lastChart = lastChart;
 	}
 
+	/**
+	 * Updates the text and caret position on the IHM
+	 */
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
@@ -175,7 +206,7 @@ public class IHMImpl implements IHM {
 		if (!editorMotorImpl.isSelection()) {
 
 			int caretPosition = editorMotorImpl.getCaret();
-			pnlText.setText(editorMotorImpl.getBuffer().toString());
+			pnlText.setText(editorMotorImpl.getBuffer());
 			pnlText.setCaretPosition(caretPosition);
 
 		} else {
@@ -190,6 +221,11 @@ public class IHMImpl implements IHM {
 		pnlText.requestFocusInWindow();
 	}
 
+	/**
+	 * returns the caret position on the IHM
+	 * 
+	 * @return a integer with the actual caret position on the IHM
+	 */
 	public int getCaretPosition() {
 		return pnlText.getCaretPosition();
 	}
@@ -199,12 +235,21 @@ public class IHMImpl implements IHM {
 	 * register button when clicked
 	 */
 	public void changeButtonsProperties() {
-		if (btnRecording.getText().contentEquals("Enregistrer") ) {
+		if (btnRecording.getText().contentEquals("Enregistrer")) {
 			btnRecording.setText("Arrêter Enregistrement");
 			btnRecording.setIcon(new ImageIcon("icons/stopIcon.png"));
-		}else if (btnRecording.getText().contentEquals("Arrêter Enregistrement")) {
+			if (btnReplay.isEnabled()) {
+				btnReplay.setEnabled(false);
+			}
+		} else if (btnRecording.getText().contentEquals("Arrêter Enregistrement")) {
 			btnRecording.setText("Enregistrer");
 			btnRecording.setIcon(new ImageIcon("icons/recordIcon.png"));
+			if (!btnReplay.isEnabled()) {
+				btnReplay.setEnabled(true);
+			}
+			pnlText.requestFocusInWindow();
+
 		}
 	}
+
 }

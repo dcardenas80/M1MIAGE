@@ -13,16 +13,18 @@ import fr.edu.istic.m1.miage.miniediteur.invoker.IHM;
 public interface EditorMotor {
 
 	/**
-	 * Sets a selection based on a point of origin and a size that indicates it's
-	 * end
+	 * This method sets a selection based on a point of origin and a size that
+	 * indicates it's end
 	 * 
 	 * @param selectionOrigin
+	 *            - the origin of the selection to set
 	 * @param selectionSize
+	 *            - the size of the selection
 	 */
 	public void setSelection(int selectionOrigin, int selectionSize);
 
 	/**
-	 * Paste a text into the Editor's motor buffer
+	 * This method paste a text into the Editor's motor buffer
 	 * 
 	 * @throws IOException
 	 * @throws UnsupportedFlavorException
@@ -30,67 +32,68 @@ public interface EditorMotor {
 	public void pasteText() throws UnsupportedFlavorException, IOException;
 
 	/**
-	 * copies a text on the clipboard based on a previous selection
+	 * This method copies a text on the ClipBoard based on a previous selection
 	 * 
 	 * 
 	 */
 	public void copyText();
 
 	/**
-	 * Cuts a text from the Editor's motor buffer
+	 * This method cuts a text from the Editor's motor buffer
 	 */
 	public void cutText();
 
 	/**
-	 * Insert text into the buffer
+	 * This method inserts text into the buffer
 	 * 
 	 * @param text
+	 *            - the text to be inserted
 	 */
 	public void insertText(char text);
 
 	/**
-	 * Command used to erase text from the buffer
+	 * This method is used to erase text from the buffer
 	 */
 	public void deleteText();
 
 	/**
-	 * Returns the current selection's size
+	 * This method returns the current selection's size
 	 * 
-	 * @return
+	 * @return a integer with the size of a selection
 	 */
 	public int getSelectionSize();
 
 	/**
-	 * Returns the origin of a selection
+	 * This method returns the origin of a selection
 	 * 
-	 * @return
+	 * @return a integer with the origin of the selection
 	 */
 	public int getSelectionOrigin();
 
 	/**
-	 * updates the caret positions of the Editor's motor buffer
+	 * This method updates the caret positions of the Editor's motor buffer
 	 * 
 	 * @param caretPostion
 	 */
 	public void setCaret(int caretPostion);
 
 	/**
-	 * return the caretPosition to set
+	 * This method return the caretPosition to set
 	 * 
-	 * @return caretPosition
+	 * @return an integer with the position of the caret
 	 */
 	public int getCaret();
 
 	/**
-	 * Notify all the observer.
+	 * This method notifies all the observers of the concrete classes.
 	 */
 	public abstract void notifyObservers();
 
 	/**
-	 * Attach a new observer.
+	 * This method attach a new observer.
 	 * 
 	 * @param ihm
-	 *            Observer to attach
+	 *            - Observer to attach
 	 * 
 	 */
 	public abstract void attach(IHM ihm);
@@ -99,7 +102,8 @@ public interface EditorMotor {
 	 * Detach an observer.
 	 * 
 	 * @param IHM
-	 *            observer to remove if it's on the observers following the subject
+	 *            - observer to remove if it's on the observers following the
+	 *            subject
 	 */
 	public abstract void detach(IHM ihm);
 

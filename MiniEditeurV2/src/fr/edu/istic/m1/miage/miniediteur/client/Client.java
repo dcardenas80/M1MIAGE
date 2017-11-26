@@ -5,19 +5,22 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import javax.swing.KeyStroke;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
 import fr.edu.istic.m1.miage.miniediteur.command.Command;
 import fr.edu.istic.m1.miage.miniediteur.command.CopyText;
 import fr.edu.istic.m1.miage.miniediteur.command.CutText;
-import fr.edu.istic.m1.miage.miniediteur.command.DeleteText;
-import fr.edu.istic.m1.miage.miniediteur.command.InsertText;
 import fr.edu.istic.m1.miage.miniediteur.command.PasteText;
+import fr.edu.istic.m1.miage.miniediteur.command.PlayRecording;
 import fr.edu.istic.m1.miage.miniediteur.command.StartRecording;
 import fr.edu.istic.m1.miage.miniediteur.command.StopRecording;
-import fr.edu.istic.m1.miage.miniediteur.command.SelectText;
+import fr.edu.istic.m1.miage.miniediteur.command.mementoCommands.RecordableCopyText;
+import fr.edu.istic.m1.miage.miniediteur.command.mementoCommands.RecordableCutText;
+import fr.edu.istic.m1.miage.miniediteur.command.mementoCommands.RecordableDeleteText;
+import fr.edu.istic.m1.miage.miniediteur.command.mementoCommands.RecordableInsertText;
+import fr.edu.istic.m1.miage.miniediteur.command.mementoCommands.RecordablePasteText;
+import fr.edu.istic.m1.miage.miniediteur.command.mementoCommands.RecordableSelectText;
 import fr.edu.istic.m1.miage.miniediteur.invoker.IHMImpl;
 import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotor;
 import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
@@ -40,7 +43,7 @@ public class Client implements ActionListener, KeyListener, CaretListener {
 	private static EditorMotor editorMotorImpl;
 	private Command command;
 	private static final String[] buttonsKeys = { "Copier Texte", "Coller Texte", "Couper Texte", "Enregistrer",
-			"Arrêter Enregistrement" };
+			"Arrêter Enregistrement", "Rejouer" };
 
 	/**
 	 * this method registers all the action events inside the buttons in the
@@ -51,30 +54,43 @@ public class Client implements ActionListener, KeyListener, CaretListener {
 
 		String btnId = e.getActionCommand();
 		if (btnId.contentEquals(buttonsKeys[0])) {
-			command = new CopyText();
+			command = new RecordableCopyText();
 			IHMImplInstance.setCommand(command);
 		} else if (btnId.contentEquals(buttonsKeys[1])) {
-			command = new PasteText();
+			command = new RecordablePasteText();
 			IHMImplInstance.setCommand(command);
 		} else if (btnId.contentEquals(buttonsKeys[2])) {
-			command = new CutText();
+			command = new RecordableCutText();
 			IHMImplInstance.setCommand(command);
 		} else if (btnId.contentEquals(buttonsKeys[3])) {
-			IHMImplInstance.changeButtonsProperties();
+
 			command = new StartRecording();
 			IHMImplInstance.setCommand(command);
-		} else if (btnId.contentEquals(buttonsKeys[4])) {
 			IHMImplInstance.changeButtonsProperties();
+		} else if (btnId.contentEquals(buttonsKeys[4])) {
+
 			command = new StopRecording();
 			IHMImplInstance.setCommand(command);
+			IHMImplInstance.changeButtonsProperties();
+		} else if (btnId.contentEquals(buttonsKeys[5])) {
+			command = new PlayRecording();
+			IHMImplInstance.setCommand(command);
+			// IHMImplInstance.changeButtonsProperties();
 		}
+
+	}
+
+	/**
+	 * private constructor of the Client class
+	 */
+	private Client() {
 
 	}
 
 	/**
 	 * This method allows the implementation of a lazy singleton pattern
 	 * 
-	 * @return MonAppli unique instance of the class
+	 * @return an instance of the Client class
 	 */
 	public static Client getInstance() {
 		if (client == null) {
@@ -97,17 +113,22 @@ public class Client implements ActionListener, KeyListener, CaretListener {
 		if (selectionSize != 0) {
 			if (selectionOrigin != IHMImplInstance.getSelectionOrigin()
 					|| selectionSize != IHMImplInstance.getSelectionSize()) {
-				IHMImplInstance.setSelectionOrigin(selectionOrigin);
-				IHMImplInstance.setSelectionSize(selectionSize);
-				command = new SelectText();
-				IHMImplInstance.setCommand(command);
+
+				if (selectionOrigin != editorMotorImpl.getSelectionOrigin()) {
+					IHMImplInstance.setSelectionOrigin(selectionOrigin);
+					IHMImplInstance.setSelectionSize(selectionSize);
+					command = new RecordableSelectText();
+					IHMImplInstance.setCommand(command);
+				}
 
 			}
 
 		}
-
 	}
 
+	/**
+	 * this method is only used to capture the control + commands
+	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -125,6 +146,9 @@ public class Client implements ActionListener, KeyListener, CaretListener {
 
 	}
 
+	/**
+	 * this method is not implemented
+	 */
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -132,7 +156,7 @@ public class Client implements ActionListener, KeyListener, CaretListener {
 	}
 
 	/**
-	 * if a key is typed this methods verifies if it is a letter or a backspace
+	 * this method verifies if a key is typed and if it is a letter or a backspace
 	 */
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -146,16 +170,21 @@ public class Client implements ActionListener, KeyListener, CaretListener {
 			{
 
 				IHMImplInstance.setLastChart(keyChar);
-				command = new InsertText();
+				command = new RecordableInsertText();
 				IHMImplInstance.setCommand(command);
 
 			} else if (keyChar == '\b') {
-				command = new DeleteText();
+				command = new RecordableDeleteText();
 				IHMImplInstance.setCommand(command);
 			}
 		}
 	}
-
+	/**
+	 * this is the main method of the program
+	 * 
+	 * @param args
+	 *            - array of arguments void in this case
+	 */
 	public static void main(String[] args) {
 		client = Client.getInstance();
 		IHMImplInstance = IHMImpl.getInstance();

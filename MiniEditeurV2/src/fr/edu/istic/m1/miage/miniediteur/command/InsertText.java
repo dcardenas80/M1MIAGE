@@ -14,7 +14,7 @@ public class InsertText implements Command {
 
 	private IHMImpl ihmImpl;
 	private EditorMotorImpl editorMotorImpl;
-	
+
 	/**
 	 * Execute method for the command InsertText
 	 */

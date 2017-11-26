@@ -1,7 +1,7 @@
 package fr.edu.istic.m1.miage.miniediteur.receiver;
 
 /**
- * @Diego Cardenas
+ * @author Diego Cardenas
  * @version 2.0
  * 
  *          The class buffer is the class where is registered all the text
@@ -27,17 +27,21 @@ public class Buffer {
 	 * @throws StringIndexOutOfBoundsException
 	 */
 	public void deleteText() throws StringIndexOutOfBoundsException {
-		setCaretPosition(getCaretPosition()-1);
-		motorText.deleteCharAt(getCaretPosition());
-	;
+		if (getCaretPosition() - 1 > -1) {
+			setCaretPosition(getCaretPosition() - 1);
+			motorText.deleteCharAt(getCaretPosition());
+		}
+
 	}
 
 	/**
-	 * Cut text from the buffer
+	 * This method cuts text from the buffer
 	 * 
 	 * @param selectionOrigin
+	 *            - initial point of the selection to be cut
 	 * @param selectionSize
-	 * @return
+	 *            - size of the selection
+	 * @return a string with the text cut
 	 */
 	public String cutText(int selectionOrigin, int selectionSize) {
 		String text = motorText.substring(selectionOrigin, selectionOrigin + selectionSize);
@@ -48,30 +52,31 @@ public class Buffer {
 	}
 
 	/**
-	 * appends single characters into the buffer
+	 * This method appends single characters into the buffer
 	 * 
 	 * @param texte
+	 *            -a char to be inserted into the buffer
 	 */
 	public void append(char texte) {
 		// TODO Auto-generated method stub
 		if (texte == '\n') {
-			motorText.insert(getCaretPosition(), System.getProperty("line.separator"));
-
+			motorText.insert(getCaretPosition(), '\n');
 		} else {
 			motorText.insert(getCaretPosition(), texte);
-
 		}
-		int lenght = getCaretPosition();
-		setCaretPosition(lenght + 1);
+		int lenght = getCaretPosition() + 1;
+		setCaretPosition(lenght);
 
 	}
 
 	/**
-	 * copies text from the buffer based in a selection
+	 * This method copies text from the buffer based in a selection
 	 * 
 	 * @param selectionOrigin
+	 *            - the origin of a selection
 	 * @param selectionSize
-	 * @return
+	 *            - the size of the selection
+	 * @return a String with the value requested by the selection
 	 */
 	public String copyText(int selectionOrigin, int selectionSize) {
 		String text = motorText.substring(selectionOrigin, selectionOrigin + selectionSize);
@@ -79,9 +84,13 @@ public class Buffer {
 		return text;
 
 	}
+
 	/**
-	 * Method's overcharges
+	 * This method is a over charge of the append method this method insert a String
+	 * on the buffer
+	 * 
 	 * @param texte
+	 *            - a String to be inserted
 	 */
 	public void append(String texte) {
 		// TODO Auto-generated method stub
@@ -92,26 +101,42 @@ public class Buffer {
 		setCaretPosition(lenght + texte.length());
 
 	}
-    
+
 	/**
-	 * Getters and Setters
+	 * This method gets the caret position on buffer's side
 	 * 
+	 * @return an integer with the position of the caret
 	 */
-	
 	public int getCaretPosition() {
 		return caretPosition;
 	}
 
+	/**
+	 * This method sets the caret position on buffer's side
+	 * 
+	 * @param setCaretPosition-
+	 *            the position of the caret
+	 */
 	public void setCaretPosition(int setCaretPosition) {
 		this.caretPosition = setCaretPosition;
 	}
 
-	public void setMotorText(StringBuffer motorText) {
-		this.motorText = motorText;
+	/**
+	 * This method returns the text inside the buffer
+	 * 
+	 * @return a String with the buffer content
+	 */
+	public String getMotorText() {
+		return motorText.toString();
 	}
 
-	public StringBuffer getMotorText() {
-		return motorText;
+	/**
+	 * This method returns the length of the buffer
+	 * 
+	 * @return an integer with the value of the length
+	 */
+	public int getLenght() {
+		return motorText.length();
 	}
 
 }

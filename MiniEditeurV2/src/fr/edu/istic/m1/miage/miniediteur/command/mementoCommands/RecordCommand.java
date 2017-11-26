@@ -1,5 +1,6 @@
-package fr.edu.istic.m1.miage.miniediteur.command;
+package fr.edu.istic.m1.miage.miniediteur.command.mementoCommands;
 
+import fr.edu.istic.m1.miage.miniediteur.command.Command;
 import fr.edu.istic.m1.miage.miniediteur.memento.Memento;
 
 /**
@@ -12,8 +13,13 @@ import fr.edu.istic.m1.miage.miniediteur.memento.Memento;
  */
 public interface RecordCommand extends Command {
 
+	/**
+	 * this method returns a Memento objet of the command being executed
+	 * 
+	 * @return Memento
+	 */
 	public Memento getMemento();
 
-	public void setMemento(Memento m);
+	public void setMemento(Memento memento);
 
 }

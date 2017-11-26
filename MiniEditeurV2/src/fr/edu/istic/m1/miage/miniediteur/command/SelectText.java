@@ -13,7 +13,6 @@ public class SelectText implements Command {
 
 	private static IHMImpl ihmImpl;
 	private EditorMotorImpl editorMotorImpl;
-	
 	/**
 	 * Execute method for the command SelectText
 	 */

@@ -7,7 +7,8 @@ package fr.edu.istic.m1.miage.miniediteur.command;
 /**
  * Command interface used in the concrete commands of the text Editor
  * 
- * @author Diego
+ * @author Diego Cardenas
+ * @version 1.0
  *
  */
 public interface Command {
