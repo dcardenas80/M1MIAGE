@@ -3,19 +3,15 @@ package fr.edu.istic.m1.miage.miniediteur.invoker;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.Image;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import javax.swing.ActionMap;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.event.CaretListener;
 
@@ -45,12 +41,16 @@ public class IHMImpl implements IHM {
 	private static final int textAreaCols = 60;
 
 	/**
-	 * Constructor of the IHMImpl Class it receives three listeners charged of the
-	 * events on the GUI
+	 * private Constructor of the IHMImpl Class it receives three listeners charged
+	 * of the events on the GUI
 	 * 
 	 * @param actionListener
+	 *            - an action listener for the actions on the buttons
 	 * @param caretListener
+	 *            - the caret listener charge of the updates on the caret for the
+	 *            panel text
 	 * @param keyListener
+	 *            - a listener for the keyboard actions
 	 */
 	private IHMImpl(ActionListener actionListener, CaretListener caretListener, KeyListener keyListener) {
 		initialize(actionListener, caretListener, keyListener);
@@ -60,11 +60,15 @@ public class IHMImpl implements IHM {
 	}
 
 	/**
-	 * initialize of the GUI sets components like bottons and text areas.
+	 * initialize of the GUI sets components like buttons and text areas.
 	 * 
 	 * @param actionListener
+	 *            - an action listener for the actions on the buttons
 	 * @param caretListener
+	 *            - the caret listener charge of the updates on the caret for the
+	 *            panel text
 	 * @param keyListener
+	 *            - a listener for the keyboard actions
 	 */
 	private void initialize(ActionListener actionListener, CaretListener caretListener, KeyListener keyListener) {
 		frmTextProcessor = new JFrame();
@@ -101,14 +105,13 @@ public class IHMImpl implements IHM {
 
 		JScrollPane scrollPane = new JScrollPane(pnlText);
 		frmTextProcessor.getContentPane().add(scrollPane, BorderLayout.CENTER);
-		
-		
+
 	}
 
 	/**
 	 * Lazy implementation of Singleton pattern
 	 * 
-	 * @return
+	 * @return an instance of the IHMImpl class
 	 */
 	public static IHMImpl getInstance() {
 		if (IHMImplInstance == null) {
@@ -132,12 +135,20 @@ public class IHMImpl implements IHM {
 	}
 
 	/**
-	 * Getters and Setters
+	 * get the point where a selection begins
+	 * 
+	 * @return an integer with the value of the initial position
 	 */
-
 	public int getSelectionOrigin() {
 		return selectionOrigin;
 	}
+
+	/**
+	 * sets the initial point of a selection on the IHM
+	 * 
+	 * @param selectionOrigin
+	 *            - the initial point
+	 */
 
 	public void setSelectionOrigin(int selectionOrigin) {
 		this.selectionOrigin = selectionOrigin;
@@ -151,14 +162,28 @@ public class IHMImpl implements IHM {
 		this.selectionSize = selectionSize;
 	}
 
+	/**
+	 * returns the last chart typed by the user
+	 * 
+	 * @return a char that contains the last typed char by the client
+	 */
 	public char getLastChart() {
 		return lastChart;
 	}
 
+	/**
+	 * sets the last char that the users has typed
+	 * 
+	 * @param lastChart
+	 *            - the last char typed
+	 */
 	public void setLastChart(char lastChart) {
 		this.lastChart = lastChart;
 	}
 
+	/**
+	 * Updates the text and caret position on the IHM
+	 */
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
@@ -182,7 +207,11 @@ public class IHMImpl implements IHM {
 		pnlText.requestFocusInWindow();
 	}
 
-
+	/**
+	 * returns the caret position on the IHM
+	 * 
+	 * @return a integer with the actual caret position on the IHM
+	 */
 	public int getCaretPosition() {
 		return pnlText.getCaretPosition();
 	}

@@ -1,8 +1,6 @@
 package fr.edu.istic.m1.miage.miniediteur.command;
 
-import fr.edu.istic.m1.miage.miniediteur.invoker.IHMImpl;
 import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
-
 
 /**
  * @author Diego Cardenas
@@ -12,22 +10,22 @@ import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
  *          DeleteText
  */
 public class DeleteText implements Command {
-	private static IHMImpl ihmImpl;
 	private EditorMotorImpl editorMotorImpl;
+
 	/**
 	 * Execute method for the command DeleteText
 	 */
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
-		  ihmImpl = IHMImpl.getInstance();
-		  editorMotorImpl = EditorMotorImpl.getInstance();
-		  try {
-			  editorMotorImpl.deleteText();
-		  }catch (Exception e) {
+
+		editorMotorImpl = EditorMotorImpl.getInstance();
+		try {
+			editorMotorImpl.deleteText();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		 
+
 	}
 
 }

@@ -15,16 +15,15 @@ import fr.edu.istic.m1.miage.miniediteur.invoker.IHM;
  */
 public class EditorMotorImpl implements EditorMotor {
 
-	/**
-	 * Definition of Singleton Pattern to control the number of instances of the
-	 * class MoteurEditionImpl
-	 */
 	private static EditorMotorImpl moteurEditionImplInstance;
 	private Buffer textMoteur;
 	private Selection selection;
 	private Collection<IHM> ihmObservers;
 	private ClipBoard clipBoard;
 
+	/**
+	 * Private constructor of the EditorMotorImpl class
+	 */
 	private EditorMotorImpl() {
 		this.textMoteur = new Buffer();
 		this.ihmObservers = new ArrayList<IHM>();
@@ -35,7 +34,7 @@ public class EditorMotorImpl implements EditorMotor {
 	/**
 	 * Lazy singleton pattern
 	 * 
-	 * @return new instance of the EditorMotor if there is not an instance already
+	 * @return a new instance of the EditorMotor if there is not an instance already
 	 *         created
 	 */
 	public static EditorMotorImpl getInstance() {
@@ -101,12 +100,20 @@ public class EditorMotorImpl implements EditorMotor {
 		ihmObservers.remove(ihm);
 	}
 
+	/***
+	 * This method returns the buffer of the EditorMotorImpl Object
+	 * 
+	 * @return a StringBuffer with the content of the buffer
+	 */
 	public StringBuffer getBuffer() {
 
 		return textMoteur.getMotorText();
 
 	}
 
+	/**
+	 * This method sets the caret into the Editor's buffet
+	 */
 	public void setCaret(int caretPostion) {
 		textMoteur.setCaretPosition(caretPostion);
 	}
@@ -117,6 +124,11 @@ public class EditorMotorImpl implements EditorMotor {
 		return textMoteur.getCaretPosition();
 	}
 
+	/**
+	 * This method verifies if the action to do is a selection
+	 * 
+	 * @return a boolean with true if is a selection false in the other case
+	 */
 	public boolean isSelection() {
 		return selection.isSelection();
 	}

@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import javax.swing.KeyStroke;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
@@ -61,9 +60,16 @@ public class Client implements ActionListener, KeyListener, CaretListener {
 	}
 
 	/**
+	 * private constructor of the Client class
+	 */
+	private Client() {
+
+	}
+
+	/**
 	 * This method allows the implementation of a lazy singleton pattern
 	 * 
-	 * @return MonAppli unique instance of the class
+	 * @return an instance of the Client class
 	 */
 	public static Client getInstance() {
 		if (client == null) {
@@ -97,6 +103,9 @@ public class Client implements ActionListener, KeyListener, CaretListener {
 
 	}
 
+	/**
+	 * this method is only used to capture the control + commands
+	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -111,9 +120,12 @@ public class Client implements ActionListener, KeyListener, CaretListener {
 			command = new PasteText();
 			IHMImplInstance.setCommand(command);
 		}
-		
+
 	}
 
+	/**
+	 * this method is not implemented
+	 */
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -121,15 +133,15 @@ public class Client implements ActionListener, KeyListener, CaretListener {
 	}
 
 	/**
-	 * if a key is typed this methods verifies if it is a letter or a backspace
+	 * this method verifies if a key is typed and if it is a letter or a backspace
 	 */
 	@Override
 	public void keyTyped(KeyEvent e) {
 		e.consume();
 		int modifier = e.getModifiersEx();
 		char keyChar = e.getKeyChar();
-		
-		if ( modifier != KeyEvent.VK_DEAD_GRAVE ) {
+
+		if (modifier != KeyEvent.VK_DEAD_GRAVE) {
 
 			if (keyChar != '\b') /** if key typed is not a backspace */
 			{
@@ -145,6 +157,12 @@ public class Client implements ActionListener, KeyListener, CaretListener {
 		}
 	}
 
+	/**
+	 * this is the main method of the program
+	 * 
+	 * @param args
+	 *            - array of arguments void in this case
+	 */
 	public static void main(String[] args) {
 		client = Client.getInstance();
 		IHMImplInstance = IHMImpl.getInstance();
