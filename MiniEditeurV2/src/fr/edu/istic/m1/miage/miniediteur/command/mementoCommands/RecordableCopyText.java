@@ -5,6 +5,16 @@ import fr.edu.istic.m1.miage.miniediteur.memento.Memento;
 import fr.edu.istic.m1.miage.miniediteur.memento.Recorder;
 import fr.edu.istic.m1.miage.miniediteur.memento.concretemementos.CopyTextMemento;
 
+/**
+ * 
+ * @author Diego Cardenas
+ * @version 1.0
+ * 
+ *          Class that inherits CopyText command and is charged with the
+ *          execution of that concrete command and also of the set and get of
+ *          the memento object
+ *
+ */
 public class RecordableCopyText extends CopyText implements RecordCommand {
 	private Recorder recorder;
 	private CopyTextMemento copyTextMemento;

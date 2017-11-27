@@ -8,7 +8,7 @@ import fr.edu.istic.m1.miage.miniediteur.memento.Recorder;
  * @version 1.0
  * 
  *          this class is the command to be executed when the users wants to
- *          step a recording
+ *          stop a recording in the recorder
  *
  */
 public class StopRecording implements Command {

@@ -7,6 +7,17 @@ import fr.edu.istic.m1.miage.miniediteur.memento.Recorder;
 import fr.edu.istic.m1.miage.miniediteur.memento.concretemementos.InsertTextMemento;
 import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
 
+/**
+ * 
+ * @author Diego Cardenas
+ * @version 1.0
+ * 
+ * 
+ *          Class that inherits Insert Text command and is charged with the
+ *          execution of that concrete command and also of the set and get of
+ *          the memento object
+ *
+ */
 public class RecordableInsertText extends InsertText implements RecordCommand {
 	private Recorder recorder;
 	private InsertTextMemento insertTextMemento;

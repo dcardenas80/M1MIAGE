@@ -7,6 +7,18 @@ import fr.edu.istic.m1.miage.miniediteur.memento.Recorder;
 import fr.edu.istic.m1.miage.miniediteur.memento.concretemementos.SelectTextMemento;
 import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
 
+
+/**
+ * 
+ * @author Diego Cardenas
+ * @version 1.0
+ * 
+ * 
+ *          Class that inherits Select Text command and is charged with the
+ *          execution of that concrete command and also of the set and get of
+ *          the memento object
+ *
+ */
 public class RecordableSelectText extends SelectText implements RecordCommand {
 
 	private Recorder recorder;

@@ -7,7 +7,7 @@ import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
  * @version 1.0
  * 
  *          Class charged with the logic implementation of the concrete command
- *          PasteText
+ *          Paste Text into the editor's motor
  */
 public class SelectText implements Command {
 

@@ -8,7 +8,7 @@ import fr.edu.istic.m1.miage.miniediteur.memento.Recorder;
  * @version 1.0
  *
  *          this class is used as command charged to play a recording save in
- *          memory
+ *          the Recorder
  */
 public class PlayRecording implements Command {
 	private Recorder recorder;
