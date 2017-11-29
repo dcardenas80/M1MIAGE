@@ -15,6 +15,7 @@ import fr.edu.istic.m1.miage.miniediteur.command.DeleteText;
 import fr.edu.istic.m1.miage.miniediteur.command.InsertText;
 import fr.edu.istic.m1.miage.miniediteur.command.PasteText;
 import fr.edu.istic.m1.miage.miniediteur.command.SelectText;
+import fr.edu.istic.m1.miage.miniediteur.invoker.IHM;
 import fr.edu.istic.m1.miage.miniediteur.invoker.IHMImpl;
 import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotor;
 import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
@@ -33,7 +34,7 @@ import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
 public class Client implements ActionListener, KeyListener, CaretListener {
 
 	private static Client client;
-	private static IHMImpl IHMImplInstance;
+	private static IHM IHMImplInstance;
 	private static EditorMotor editorMotorImpl;
 	private Command command;
 	private static final String[] buttonsKeys = { "Copier Texte", "Coller Texte", "Couper Texte" };

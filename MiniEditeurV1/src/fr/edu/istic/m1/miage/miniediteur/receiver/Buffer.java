@@ -124,8 +124,21 @@ public class Buffer {
 	 * 
 	 * @return a StringBuffer object
 	 */
-	public StringBuffer getMotorText() {
-		return motorText;
+	public String getMotorText() {
+		return motorText.toString();
+	}
+
+	/**
+	 * Delete the requested text by its origin and its size
+	 * 
+	 * @param selectionOrigin
+	 *            - the origin of the text to delete
+	 * @param selectionSize
+	 *            - the size of the text to delete
+	 */
+	public void deleteTextByRange(int selectionOrigin, int selectionSize) {
+		motorText.delete(selectionOrigin, selectionOrigin + selectionSize);
+		setCaretPosition(selectionOrigin);
 	}
 
 }

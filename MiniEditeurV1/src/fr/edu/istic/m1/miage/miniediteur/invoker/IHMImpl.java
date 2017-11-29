@@ -192,7 +192,7 @@ public class IHMImpl implements IHM {
 		if (!editorMotorImpl.isSelection()) {
 
 			int caretPosition = editorMotorImpl.getCaret();
-			pnlText.setText(editorMotorImpl.getBuffer().toString());
+			pnlText.setText(editorMotorImpl.getBuffer());
 			pnlText.setCaretPosition(caretPosition);
 
 		} else {

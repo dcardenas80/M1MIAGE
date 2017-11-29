@@ -1,5 +1,6 @@
 package fr.edu.istic.m1.miage.miniediteur.command;
 
+import fr.edu.istic.m1.miage.miniediteur.invoker.IHM;
 import fr.edu.istic.m1.miage.miniediteur.invoker.IHMImpl;
 import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
 
@@ -12,7 +13,7 @@ import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
  */
 public class InsertText implements Command {
 
-	private IHMImpl ihmImpl;
+	private IHM ihmImpl;
 	private EditorMotorImpl editorMotorImpl;
 	
 	/**

@@ -24,4 +24,44 @@ public interface IHM {
 	 */
 	public void update();
 
+	/**
+	 * get the point where a selection begins
+	 * 
+	 * @return an integer with the value of the initial position
+	 */
+	public int getSelectionOrigin();
+
+	/**
+	 * sets the initial point of a selection on the IHM
+	 * 
+	 * @param selectionOrigin
+	 *            - the initial point
+	 */
+
+	public void setSelectionOrigin(int selectionOrigin);
+
+	public int getSelectionSize();
+
+	public void setSelectionSize(int selectionSize);
+
+	/**
+	 * returns the last chart typed by the user
+	 * 
+	 * @return a char that contains the last typed char by the client
+	 */
+	public char getLastChart();
+
+	/**
+	 * sets the last char that the users has typed
+	 * 
+	 * @param lastChart
+	 *            - the last char typed
+	 */
+	public void setLastChart(char lastChart);
+	/**
+	 * returns the caret position on the IHM
+	 * 
+	 * @return a integer with the actual caret position on the IHM
+	 */
+	public int getCaretPosition();
 }

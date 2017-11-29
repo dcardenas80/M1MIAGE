@@ -68,10 +68,12 @@ public class EditorMotorImpl implements EditorMotor {
 	public void deleteText() throws StringIndexOutOfBoundsException {
 		// TODO Auto-generated method stub
 		if (selection.isSelection()) {
-			textMoteur.cutText(getSelectionOrigin(), getSelectionSize());
+			textMoteur.deleteTextByRange(getSelectionOrigin(), getSelectionSize());
+		} else {
+			textMoteur.deleteText();
 		}
 		selection.setSelection(false);
-		textMoteur.deleteText();
+
 		notifyObservers();
 	}
 
@@ -101,11 +103,12 @@ public class EditorMotorImpl implements EditorMotor {
 	}
 
 	/***
-	 * This method returns the buffer of the EditorMotorImpl Object
+	 * This method returns the String value of the buffer of the EditorMotorImpl
+	 * Object
 	 * 
 	 * @return a StringBuffer with the content of the buffer
 	 */
-	public StringBuffer getBuffer() {
+	public String getBuffer() {
 
 		return textMoteur.getMotorText();
 

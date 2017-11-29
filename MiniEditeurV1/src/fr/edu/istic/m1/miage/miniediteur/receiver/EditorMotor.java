@@ -107,4 +107,11 @@ public interface EditorMotor {
 	 */
 	public abstract void detach(IHM ihm);
 
+	/***
+	 * This method returns the String value of the buffer of the EditorMotorImpl
+	 * Object
+	 * 
+	 * @return a StringBuffer with the content of the buffer
+	 */
+	public String getBuffer();
 }
