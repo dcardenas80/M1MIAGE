@@ -1,10 +1,12 @@
 package fr.edu.istic.m1.miage.miniediteur.command.mementoCommands;
 
 import fr.edu.istic.m1.miage.miniediteur.command.SelectText;
+import fr.edu.istic.m1.miage.miniediteur.invoker.IHM;
 import fr.edu.istic.m1.miage.miniediteur.invoker.IHMImpl;
 import fr.edu.istic.m1.miage.miniediteur.memento.Memento;
 import fr.edu.istic.m1.miage.miniediteur.memento.Recorder;
 import fr.edu.istic.m1.miage.miniediteur.memento.concretemementos.SelectTextMemento;
+import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotor;
 import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
 
 
@@ -23,8 +25,8 @@ public class RecordableSelectText extends SelectText implements RecordCommand {
 
 	private Recorder recorder;
 	private SelectTextMemento selectTextMemento;
-	private EditorMotorImpl editorMotorImpl;
-	private IHMImpl ihmImpl;
+	private EditorMotor editorMotorImpl;
+	private IHM ihmImpl;
     private int[] selection;
     
     public RecordableSelectText() {
@@ -54,8 +56,12 @@ public class RecordableSelectText extends SelectText implements RecordCommand {
 		// TODO Auto-generated method stub
         int[] selection = ((SelectTextMemento)memento).getState();
         editorMotorImpl = EditorMotorImpl.getInstance();
-        
+        ihmImpl = IHMImpl.getInstance();
+        editorMotorImpl.setSelectionMacro(true);
+        recorder = Recorder.getInstance();
+        recorder.setCaretPaste(ihmImpl.getCaretPosition());
         editorMotorImpl.setSelection(selection[0], selection[1]);
+        editorMotorImpl.setSelectionMacro(false);
 	}
 
 }

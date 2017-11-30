@@ -7,6 +7,7 @@ import fr.edu.istic.m1.miage.miniediteur.command.PasteText;
 import fr.edu.istic.m1.miage.miniediteur.memento.Memento;
 import fr.edu.istic.m1.miage.miniediteur.memento.Recorder;
 import fr.edu.istic.m1.miage.miniediteur.memento.concretemementos.PasteTextMemento;
+import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotor;
 import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
 
 /**
@@ -23,7 +24,7 @@ import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
 public class RecordablePasteText extends PasteText implements RecordCommand {
 	private Recorder recorder;
 	private PasteTextMemento pasteTextMemento;
-	private EditorMotorImpl editorMotorImpl;
+	private EditorMotor editorMotorImpl;
 
 	@Override
 	public void execute() {
@@ -45,7 +46,8 @@ public class RecordablePasteText extends PasteText implements RecordCommand {
 		// TODO Auto-generated method stub
 		editorMotorImpl = EditorMotorImpl.getInstance();
 		try {
-			editorMotorImpl.setCaret(editorMotorImpl.getBufferLenght());
+			recorder = Recorder.getInstance();
+			editorMotorImpl.setCaret(recorder.getCaretPaste());
 			editorMotorImpl.pasteText();
 		} catch (UnsupportedFlavorException | IOException e) {
 			// TODO Auto-generated catch block

@@ -23,7 +23,7 @@ public class Recorder {
 	private Queue<Memento> commandsMementos;
 	private static Recorder recorderInstance;
 	private boolean recording = false;
-
+	private int caretPaste;
 	private Recorder() {
 
 		commandsMementos = new LinkedList<Memento>();
@@ -122,5 +122,13 @@ public class Recorder {
 			command = new RecordableCutText();
 		}
 		command.setMemento(memento);
+	}
+
+	public int getCaretPaste() {
+		return caretPaste;
+	}
+
+	public void setCaretPaste(int caretPaste) {
+		this.caretPaste = caretPaste;
 	}
 }

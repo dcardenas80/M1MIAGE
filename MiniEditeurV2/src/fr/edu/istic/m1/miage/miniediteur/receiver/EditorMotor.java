@@ -107,4 +107,42 @@ public interface EditorMotor {
 	 */
 	public abstract void detach(IHM ihm);
 
+	/**
+	 * This method verifies if the action to do is a selection
+	 * 
+	 * @return a boolean with true if is a selection false in the other case
+	 */
+	public boolean isSelection();
+
+	/**
+	 * This method returns a String with the text of the Editor's buffer
+	 * 
+	 * @return a String with the text on the Editor's buffer
+	 */
+	public String getBuffer();
+
+	/**
+	 * This method returns the length of the buffer
+	 * 
+	 * @return an integer with the buffer's length value
+	 */
+	public int getBufferLength();
+
+	/**
+	 * This method sets the caret from the user on Editor's buffer
+	 * 
+	 * @param CaretPosition
+	 *            the value of the new position
+	 */
+	public void setCaretByCommand(int caretPosition);
+    /**
+     * This method gets a boolean that let know the editor when notify an observer
+     * @return the value of the boolean
+     */
+	public boolean isSelectionMacro();
+	/**
+	 * This method sets a boolean that let know the editor when notify an observer
+	 * @param selectionMacro
+	 */
+	public void setSelectionMacro(boolean selectionMacro);
 }

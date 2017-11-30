@@ -19,11 +19,12 @@ public class EditorMotorImpl implements EditorMotor {
 	 * Definition of Singleton Pattern to control the number of instances of the
 	 * class MoteurEditionImpl
 	 */
-	private static EditorMotorImpl moteurEditionImplInstance;
+	private static EditorMotorImpl editorMotorImpl;
 	private Buffer textMoteur;
 	private Selection selection;
 	private Collection<IHM> ihmObservers;
 	private ClipBoard clipBoard;
+	private boolean selectionMacro;
 	/**
 	 * Private constructor of the EditorMotorImpl class
 	 */
@@ -41,11 +42,11 @@ public class EditorMotorImpl implements EditorMotor {
 	 *         created
 	 */
 	public static EditorMotorImpl getInstance() {
-		if (moteurEditionImplInstance == null) {
+		if (editorMotorImpl == null) {
 
-			moteurEditionImplInstance = new EditorMotorImpl();
+			editorMotorImpl = new EditorMotorImpl();
 		}
-		return moteurEditionImplInstance;
+		return editorMotorImpl;
 	}
 
 	@Override
@@ -54,7 +55,10 @@ public class EditorMotorImpl implements EditorMotor {
 		selection.setSelectionOrigin(selectionOrigin);
 		selection.setSelectionSize(selectionEnd);
 		selection.setSelection(true);
-		notifyObservers();
+		if (!selectionMacro) {
+			notifyObservers();
+		}
+	
 	}
 
 	@Override
@@ -69,10 +73,12 @@ public class EditorMotorImpl implements EditorMotor {
 	public void deleteText() throws StringIndexOutOfBoundsException {
 		// TODO Auto-generated method stub
 		if (selection.isSelection()) {
-			textMoteur.cutText(getSelectionOrigin(), getSelectionSize());
+			textMoteur.deleteTextByRange(getSelectionOrigin(), getSelectionSize());
+		}else {
+			textMoteur.deleteText();
 		}
 		selection.setSelection(false);
-		textMoteur.deleteText();
+		
 		notifyObservers();
 	}
 
@@ -106,6 +112,7 @@ public class EditorMotorImpl implements EditorMotor {
 	 * 
 	 * @return a String with the text on the Editor's buffer
 	 */
+	@Override
 	public String getBuffer() {
 
 		return textMoteur.getMotorText();
@@ -127,6 +134,7 @@ public class EditorMotorImpl implements EditorMotor {
 	 * 
 	 * @return a boolean with true if is a selection false in the other case
 	 */
+	@Override
 	public boolean isSelection() {
 		return selection.isSelection();
 	}
@@ -152,31 +160,53 @@ public class EditorMotorImpl implements EditorMotor {
 	}
 
 	@Override
-	public void copyText() {
+	public void copyText() throws StringIndexOutOfBoundsException {
 		// TODO Auto-generated method stub
 		selection.setSelection(false);
 		if (getSelectionSize() > 0) {
 			String textClipBoard = textMoteur.copyText(getSelectionOrigin(), getSelectionSize());
 			clipBoard.setContent(textClipBoard);
-
+			eraseSelection();
 		}
 
 		notifyObservers();
 	}
-
-	public int getBufferLenght() {
-		return textMoteur.getLenght();
+	@Override
+	public int getBufferLength() {
+		return textMoteur.getLength();
 	}
 
 	@Override
-	public void cutText() {
+	public void cutText() throws StringIndexOutOfBoundsException{
 		// TODO Auto-generated method stub
 		selection.setSelection(false);
 		if (getSelectionSize() > 0) {
 			String textClipBoard = textMoteur.cutText(getSelectionOrigin(), getSelectionSize());
 			clipBoard.setContent(textClipBoard);
+			eraseSelection();
 		}
 		notifyObservers();
 	}
 
+	@Override
+	public void setCaretByCommand(int caretPosition) {
+		// TODO Auto-generated method stub
+		setCaret(caretPosition);
+		notifyObservers();
+	}
+	@Override
+	public boolean isSelectionMacro() {
+		return selectionMacro;
+	}
+	@Override
+	public void setSelectionMacro(boolean selectionMacro) {
+		this.selectionMacro = selectionMacro;
+	}
+	/**
+	 * This method erase a selection from the Editor's selection
+	 */
+	public void eraseSelection() {
+		selection.setSelectionOrigin(getCaret());
+		selection.setSelectionSize(getCaret());
+	}
 }

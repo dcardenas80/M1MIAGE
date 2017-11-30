@@ -1,6 +1,8 @@
 package fr.edu.istic.m1.miage.miniediteur.command;
 
+import fr.edu.istic.m1.miage.miniediteur.invoker.IHM;
 import fr.edu.istic.m1.miage.miniediteur.invoker.IHMImpl;
+import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotor;
 import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
 
 /**
@@ -12,18 +14,18 @@ import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
  */
 public class InsertText implements Command {
 
-	private IHMImpl ihmImpl;
-	private EditorMotorImpl editorMotorImpl;
+	private IHM ihmImpl;
+	private EditorMotor editorMotorImpl;
 
 	/**
 	 * Execute method for the command InsertText
 	 */
 	@Override
 	public void execute() {
-	   ihmImpl = IHMImpl.getInstance();
-	   editorMotorImpl = EditorMotorImpl.getInstance();
-	   editorMotorImpl.setCaret(ihmImpl.getCaretPosition());
-	   editorMotorImpl.insertText(ihmImpl.getLastChart());
+		ihmImpl = IHMImpl.getInstance();
+		editorMotorImpl = EditorMotorImpl.getInstance();
+		editorMotorImpl.setCaret(ihmImpl.getCaretPosition());
+		editorMotorImpl.insertText(ihmImpl.getLastChart());
 
 	}
 

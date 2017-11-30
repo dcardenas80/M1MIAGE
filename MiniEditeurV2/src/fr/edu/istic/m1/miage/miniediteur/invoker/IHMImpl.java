@@ -9,6 +9,7 @@ import java.awt.event.KeyListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -17,6 +18,7 @@ import javax.swing.event.CaretListener;
 
 import fr.edu.istic.m1.miage.miniediteur.client.Client;
 import fr.edu.istic.m1.miage.miniediteur.command.Command;
+import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotor;
 import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
 
 /**
@@ -29,7 +31,7 @@ public class IHMImpl implements IHM {
 
 	private static IHMImpl IHMImplInstance;
 	private static Client client;
-	private static EditorMotorImpl editorMotorImpl;
+	private static EditorMotor editorMotorImpl;
 	private int selectionOrigin;
 	private int selectionSize;
 	private char lastChart;
@@ -251,5 +253,22 @@ public class IHMImpl implements IHM {
 
 		}
 	}
+
+	@Override
+	public void setWarningMessage(String message) {
+		// TODO Auto-generated method stub
+		 JOptionPane.showMessageDialog(pnlText, message, "Attention",
+			        JOptionPane.WARNING_MESSAGE);
+	}
+	
+	@Override
+	public void setCaretPosition(int caretPosition) {
+		int textLenght = pnlText.getText().length();
+		if (caretPosition > -1 && caretPosition <= textLenght) {
+			pnlText.setCaretPosition(caretPosition);
+		}
+
+	}
+	
 
 }

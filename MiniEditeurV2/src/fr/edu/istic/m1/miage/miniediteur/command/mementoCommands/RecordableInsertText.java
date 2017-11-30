@@ -1,10 +1,12 @@
 package fr.edu.istic.m1.miage.miniediteur.command.mementoCommands;
 
 import fr.edu.istic.m1.miage.miniediteur.command.InsertText;
+import fr.edu.istic.m1.miage.miniediteur.invoker.IHM;
 import fr.edu.istic.m1.miage.miniediteur.invoker.IHMImpl;
 import fr.edu.istic.m1.miage.miniediteur.memento.Memento;
 import fr.edu.istic.m1.miage.miniediteur.memento.Recorder;
 import fr.edu.istic.m1.miage.miniediteur.memento.concretemementos.InsertTextMemento;
+import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotor;
 import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
 
 /**
@@ -21,8 +23,8 @@ import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
 public class RecordableInsertText extends InsertText implements RecordCommand {
 	private Recorder recorder;
 	private InsertTextMemento insertTextMemento;
-	private IHMImpl ihmImpl;
-	private EditorMotorImpl editorMotorImpl;
+	private IHM ihmImpl;
+	private EditorMotor editorMotorImpl;
 
 	@Override
 	public void execute() {
@@ -44,8 +46,9 @@ public class RecordableInsertText extends InsertText implements RecordCommand {
 	public void setMemento(Memento memento) {
 		// TODO Auto-generated method stub
 		 char inseredText = ((InsertTextMemento) memento).getState();
+		 ihmImpl = IHMImpl.getInstance();
 		 editorMotorImpl = EditorMotorImpl.getInstance();
-		 editorMotorImpl.setCaret(editorMotorImpl.getBufferLenght());
+		 editorMotorImpl.setCaret(ihmImpl.getCaretPosition());
 		 editorMotorImpl.insertText(inseredText);
 	}
 

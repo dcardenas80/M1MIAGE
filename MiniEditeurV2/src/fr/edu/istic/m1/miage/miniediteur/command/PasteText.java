@@ -3,7 +3,9 @@ package fr.edu.istic.m1.miage.miniediteur.command;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 
+import fr.edu.istic.m1.miage.miniediteur.invoker.IHM;
 import fr.edu.istic.m1.miage.miniediteur.invoker.IHMImpl;
+import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotor;
 import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
 
 /**
@@ -14,9 +16,10 @@ import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
  *          Paste Text into the editor's motor
  */
 public class PasteText implements Command {
-	
-	private EditorMotorImpl editorMotorImpl;
-    private IHMImpl ihmImpl;
+
+	private EditorMotor editorMotorImpl;
+	private IHM ihmImpl;
+
 	/**
 	 * Execute method for the command PasteText
 	 */
@@ -24,7 +27,6 @@ public class PasteText implements Command {
 	public void execute() {
 		editorMotorImpl = EditorMotorImpl.getInstance();
 		ihmImpl = IHMImpl.getInstance();
-
 		try {
 			editorMotorImpl.setCaret(ihmImpl.getCaretPosition());
 			editorMotorImpl.pasteText();

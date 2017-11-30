@@ -4,6 +4,7 @@ import fr.edu.istic.m1.miage.miniediteur.command.DeleteText;
 import fr.edu.istic.m1.miage.miniediteur.memento.Memento;
 import fr.edu.istic.m1.miage.miniediteur.memento.Recorder;
 import fr.edu.istic.m1.miage.miniediteur.memento.concretemementos.DeleteTextMemento;
+import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotor;
 import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
 /**
  * 
@@ -20,7 +21,7 @@ public class RecordableDeleteText extends DeleteText implements RecordCommand {
 
 	private Recorder recorder;
 	private DeleteTextMemento deleteTextMemento;
-	private EditorMotorImpl editorMotorImpl;
+    private EditorMotor editorMotorImpl;
 
 	@Override
 	public void execute() {

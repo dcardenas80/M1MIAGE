@@ -43,7 +43,7 @@ public class Buffer {
 	 *            - size of the selection
 	 * @return a string with the text cut
 	 */
-	public String cutText(int selectionOrigin, int selectionSize) {
+	public String cutText(int selectionOrigin, int selectionSize) throws StringIndexOutOfBoundsException {
 		String text = motorText.substring(selectionOrigin, selectionOrigin + selectionSize);
 		motorText.delete(selectionOrigin, selectionOrigin + selectionSize);
 		setCaretPosition(selectionOrigin);
@@ -78,7 +78,7 @@ public class Buffer {
 	 *            - the size of the selection
 	 * @return a String with the value requested by the selection
 	 */
-	public String copyText(int selectionOrigin, int selectionSize) {
+	public String copyText(int selectionOrigin, int selectionSize) throws StringIndexOutOfBoundsException {
 		String text = motorText.substring(selectionOrigin, selectionOrigin + selectionSize);
 		setCaretPosition(selectionOrigin + selectionSize);
 		return text;
@@ -135,8 +135,21 @@ public class Buffer {
 	 * 
 	 * @return an integer with the value of the length
 	 */
-	public int getLenght() {
+	public int getLength() {
 		return motorText.length();
+	}
+
+	/**
+	 * Delete the requested text by its origin and its size
+	 * 
+	 * @param selectionOrigin
+	 *            - the origin of the text to delete
+	 * @param selectionSize
+	 *            - the size of the text to delete
+	 */
+	public void deleteTextByRange(int selectionOrigin, int selectionSize) {
+		motorText.delete(selectionOrigin, selectionOrigin + selectionSize);
+		setCaretPosition(selectionOrigin);
 	}
 
 }
