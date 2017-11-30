@@ -1,5 +1,6 @@
 package fr.edu.istic.m1.miage.miniediteur.command;
 
+import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotor;
 import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
 
 /**
@@ -11,14 +12,12 @@ import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
  */
 
 public class CopyText implements Command {
-	
-	private EditorMotorImpl editorMotorImpl;
-	@Override
-	
+	private EditorMotor editorMotorImpl;
 
 	/**
 	 * Execute method for the command CopyText
 	 */
+	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
 		editorMotorImpl = EditorMotorImpl.getInstance();

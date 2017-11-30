@@ -17,7 +17,7 @@ import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotor;
 import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
 
 @RunWith(JUnitPlatform.class)
-class TestEditorMotor {
+class EditorMotorTest {
 	EditorMotor editorMotor;
 
 	/**
@@ -31,7 +31,7 @@ class TestEditorMotor {
 		// Insert some sample data before each test
 		editorMotor = EditorMotorImpl.getInstance();
 		try {
-			Field instance = EditorMotorImpl.class.getDeclaredField("moteurEditionImplInstance");
+			Field instance = EditorMotorImpl.class.getDeclaredField("editorMotorImpl");
 
 			instance.setAccessible(true);
 			instance.set(null, null);

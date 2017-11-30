@@ -17,6 +17,7 @@ import javax.swing.event.CaretListener;
 
 import fr.edu.istic.m1.miage.miniediteur.client.Client;
 import fr.edu.istic.m1.miage.miniediteur.command.Command;
+import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotor;
 import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
 
 /**
@@ -29,7 +30,7 @@ public class IHMImpl implements IHM {
 
 	private static IHMImpl IHMImplInstance;
 	private static Client client;
-	private static EditorMotorImpl editorMotorImpl;
+	private static EditorMotor editorMotorImpl;
 	private int selectionOrigin;
 	private int selectionSize;
 	private char lastChart;
@@ -54,6 +55,7 @@ public class IHMImpl implements IHM {
 	 */
 	private IHMImpl(ActionListener actionListener, CaretListener caretListener, KeyListener keyListener) {
 		initialize(actionListener, caretListener, keyListener);
+		frmTextProcessor.setVisible(true);
 		frmTextProcessor.pack();
 		frmTextProcessor.setLocationRelativeTo(null);
 		pnlText.requestFocusInWindow();
@@ -117,7 +119,6 @@ public class IHMImpl implements IHM {
 		if (IHMImplInstance == null) {
 			client = Client.getInstance();
 			IHMImplInstance = new IHMImpl(client, client, client);
-			IHMImplInstance.frmTextProcessor.setVisible(true);
 		}
 		return IHMImplInstance;
 	}
@@ -214,5 +215,13 @@ public class IHMImpl implements IHM {
 	 */
 	public int getCaretPosition() {
 		return pnlText.getCaretPosition();
+	}
+	@Override
+	public void setCaretPosition(int caretPosition) {
+		int textLenght = pnlText.getText().length();
+		if (caretPosition > -1 && caretPosition <= textLenght) {
+			pnlText.setCaretPosition(caretPosition);
+		}
+
 	}
 }

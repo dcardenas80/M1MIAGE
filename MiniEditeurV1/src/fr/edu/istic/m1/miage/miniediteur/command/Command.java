@@ -11,7 +11,7 @@ package fr.edu.istic.m1.miage.miniediteur.command;
  * @version 1.0
  */
 public interface Command {
-
+	
 	/**
 	 * This method is used for execute the command
 	 */

@@ -1,5 +1,6 @@
 package fr.edu.istic.m1.miage.miniediteur.command;
 
+import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotor;
 import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
 
 /**
@@ -10,13 +11,12 @@ import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
  *          Cut Text into the editor's motor
  */
 public class CutText implements Command {
-	private EditorMotorImpl editorMotorImpl;
 
-	@Override
-
+	private EditorMotor editorMotorImpl;
 	/**
 	 * Execute method for the command CutText
 	 */
+	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
 		editorMotorImpl = EditorMotorImpl.getInstance();

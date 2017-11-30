@@ -120,6 +120,12 @@ public class Client implements ActionListener, KeyListener, CaretListener {
 		} else if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_V) {
 			command = new PasteText();
 			IHMImplInstance.setCommand(command);
+		}else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+			int caretPosition = IHMImplInstance.getCaretPosition() - 1;
+			IHMImplInstance.setCaretPosition(caretPosition);
+		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			int caretPosition = IHMImplInstance.getCaretPosition() + 1;
+			IHMImplInstance.setCaretPosition(caretPosition);
 		}
 
 	}

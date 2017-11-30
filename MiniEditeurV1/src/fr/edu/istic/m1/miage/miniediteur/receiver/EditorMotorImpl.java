@@ -15,7 +15,7 @@ import fr.edu.istic.m1.miage.miniediteur.invoker.IHM;
  */
 public class EditorMotorImpl implements EditorMotor {
 
-	private static EditorMotorImpl moteurEditionImplInstance;
+	private static EditorMotorImpl editorMotorImpl;
 	private Buffer textMoteur;
 	private Selection selection;
 	private Collection<IHM> ihmObservers;
@@ -38,11 +38,11 @@ public class EditorMotorImpl implements EditorMotor {
 	 *         created
 	 */
 	public static EditorMotorImpl getInstance() {
-		if (moteurEditionImplInstance == null) {
+		if (editorMotorImpl == null) {
 
-			moteurEditionImplInstance = new EditorMotorImpl();
+			editorMotorImpl = new EditorMotorImpl();
 		}
-		return moteurEditionImplInstance;
+		return editorMotorImpl;
 	}
 
 	@Override
@@ -163,7 +163,7 @@ public class EditorMotorImpl implements EditorMotor {
 		if (getSelectionSize() > 0) {
 			String textClipBoard = textMoteur.copyText(getSelectionOrigin(), getSelectionSize());
 			clipBoard.setContent(textClipBoard);
-
+			eraseSelection();
 		}
 
 		notifyObservers();
@@ -176,8 +176,16 @@ public class EditorMotorImpl implements EditorMotor {
 		if (getSelectionSize() > 0) {
 			String textClipBoard = textMoteur.cutText(getSelectionOrigin(), getSelectionSize());
 			clipBoard.setContent(textClipBoard);
+			eraseSelection();
 		}
 		notifyObservers();
+	}
+	/**
+	 * This method erase a selection from the Editor's selection
+	 */
+	public void eraseSelection() {
+		selection.setSelectionOrigin(getCaret());
+		selection.setSelectionSize(getCaret());
 	}
 
 }

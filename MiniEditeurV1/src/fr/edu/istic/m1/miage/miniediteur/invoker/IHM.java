@@ -64,4 +64,12 @@ public interface IHM {
 	 * @return a integer with the actual caret position on the IHM
 	 */
 	public int getCaretPosition();
+
+	/**
+	 * This method set the caret Position
+	 * 
+	 * @param caretPosition
+	 */
+	public void setCaretPosition(int caretPosition);
+
 }

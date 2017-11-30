@@ -114,4 +114,10 @@ public interface EditorMotor {
 	 * @return a StringBuffer with the content of the buffer
 	 */
 	public String getBuffer();
+	/**
+	 * This method verifies if the action to do is a selection
+	 * 
+	 * @return a boolean with true if is a selection false in the other case
+	 */
+	public boolean isSelection();
 }
