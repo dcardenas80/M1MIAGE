@@ -37,11 +37,21 @@ public interface IHM {
 	 * @param selectionOrigin
 	 *            - the initial point
 	 */
-
 	public void setSelectionOrigin(int selectionOrigin);
 
+	/**
+	 * This method gets the size of the selection
+	 * 
+	 * @return - the value with the size
+	 */
 	public int getSelectionSize();
 
+	/**
+	 * This method set the selection size on the IHM
+	 * 
+	 * @param selectionSize
+	 *            - the integer value for the size
+	 */
 	public void setSelectionSize(int selectionSize);
 
 	/**
@@ -58,6 +68,7 @@ public interface IHM {
 	 *            - the last char typed
 	 */
 	public void setLastChart(char lastChart);
+
 	/**
 	 * returns the caret position on the IHM
 	 * 
