@@ -85,7 +85,7 @@ public interface IHM {
 	/**
 	 * This method set the caret Position
 	 * 
-	 * @param caretPosition
+	 * @param caretPosition - the value with the caret position
 	 */
 	public void setCaretPosition(int caretPosition);
 

@@ -24,6 +24,7 @@ public class Recorder {
 	private static Recorder recorderInstance;
 	private boolean recording = false;
 	private int caretPaste;
+
 	private Recorder() {
 
 		commandsMementos = new LinkedList<Memento>();
@@ -124,10 +125,21 @@ public class Recorder {
 		command.setMemento(memento);
 	}
 
+	/**
+	 * This method sets a caret to be use by RecordablePasteCommand when replayed
+	 * 
+	 * @return the value of the int caretPaste
+	 */
 	public int getCaretPaste() {
 		return caretPaste;
 	}
 
+	/**
+	 * This method sets the caretPaste to be used by the RecordablePasteCommand
+	 * 
+	 * @param caretPaste
+	 *            - the value with the new caret
+	 */
 	public void setCaretPaste(int caretPaste) {
 		this.caretPaste = caretPaste;
 	}
