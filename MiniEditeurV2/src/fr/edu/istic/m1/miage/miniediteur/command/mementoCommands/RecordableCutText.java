@@ -4,6 +4,8 @@ import fr.edu.istic.m1.miage.miniediteur.command.CutText;
 import fr.edu.istic.m1.miage.miniediteur.memento.Memento;
 import fr.edu.istic.m1.miage.miniediteur.memento.Recorder;
 import fr.edu.istic.m1.miage.miniediteur.memento.concretemementos.CutTextMemento;
+import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotor;
+import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
 
 /**
  * 
@@ -19,6 +21,7 @@ import fr.edu.istic.m1.miage.miniediteur.memento.concretemementos.CutTextMemento
 public class RecordableCutText extends CutText implements RecordCommand {
 	private Recorder recorder;
 	private CutTextMemento cutTextMemento;
+	private EditorMotor editorMotorImpl;
 
 	@Override
 	public void execute() {
@@ -32,14 +35,17 @@ public class RecordableCutText extends CutText implements RecordCommand {
 	@Override
 	public Memento getMemento() {
 		// TODO Auto-generated method stub
-		cutTextMemento = new CutTextMemento();
+		editorMotorImpl = EditorMotorImpl.getInstance();
+		cutTextMemento = new CutTextMemento(editorMotorImpl.getContentClipboard());
 		return cutTextMemento;
 	}
 
 	@Override
 	public void setMemento(Memento memento) {
 		// TODO Auto-generated method stub
-		super.execute();
+		editorMotorImpl = EditorMotorImpl.getInstance();
+		String content = ((CutTextMemento)memento).getState();
+		editorMotorImpl.setContentClipboard(content);
 	}
 
 }

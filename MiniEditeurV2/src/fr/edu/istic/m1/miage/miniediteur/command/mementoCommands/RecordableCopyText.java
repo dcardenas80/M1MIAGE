@@ -1,8 +1,6 @@
 package fr.edu.istic.m1.miage.miniediteur.command.mementoCommands;
 
 import fr.edu.istic.m1.miage.miniediteur.command.CopyText;
-import fr.edu.istic.m1.miage.miniediteur.invoker.IHM;
-import fr.edu.istic.m1.miage.miniediteur.invoker.IHMImpl;
 import fr.edu.istic.m1.miage.miniediteur.memento.Memento;
 import fr.edu.istic.m1.miage.miniediteur.memento.Recorder;
 import fr.edu.istic.m1.miage.miniediteur.memento.concretemementos.CopyTextMemento;
@@ -23,8 +21,7 @@ public class RecordableCopyText extends CopyText implements RecordCommand {
 	private Recorder recorder;
 	private CopyTextMemento copyTextMemento;
 	private EditorMotor editorMotorImpl;
-	private IHM ihmImpl;
-	
+
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
@@ -36,7 +33,8 @@ public class RecordableCopyText extends CopyText implements RecordCommand {
 	@Override
 	public Memento getMemento() {
 		// TODO Auto-generated method stub
-		copyTextMemento = new CopyTextMemento();
+		editorMotorImpl = EditorMotorImpl.getInstance();
+		copyTextMemento = new CopyTextMemento(editorMotorImpl.getContentClipboard());
 		return copyTextMemento;
 	}
 
@@ -44,13 +42,8 @@ public class RecordableCopyText extends CopyText implements RecordCommand {
 	public void setMemento(Memento memento) {
 		// TODO Auto-generated method stub
 		editorMotorImpl = EditorMotorImpl.getInstance();
-		ihmImpl = IHMImpl.getInstance();
-		try {
-			editorMotorImpl.copyText();
-		} catch (StringIndexOutOfBoundsException e) {
-			// TODO: handle exception
-			ihmImpl.setWarningMessage("Erreur dans l'action de copier, revisez-vous s'il y'a une seléction");
-		}
+		String content = ((CopyTextMemento)memento).getState();
+		editorMotorImpl.setContentClipboard(content);
 
 	}
 

@@ -168,8 +168,10 @@ public class EditorMotorImpl implements EditorMotor {
 			clipBoard.setContent(textClipBoard);
 			eraseSelection();
 		}
-
-		notifyObservers();
+		
+			notifyObservers();
+		
+		
 	}
 	@Override
 	public int getBufferLength() {
@@ -209,4 +211,19 @@ public class EditorMotorImpl implements EditorMotor {
 		selection.setSelectionOrigin(getCaret());
 		selection.setSelectionSize(getCaret());
 	}
+	@Override
+	public String getContentClipboard() {
+		try {
+			return clipBoard.getContent();
+		} catch (UnsupportedFlavorException | IOException e) {
+			// TODO Auto-generated catch block
+			return "";
+		}
+	}
+	
+	@Override
+	public void setContentClipboard(String content) {
+		clipBoard.setContent(content);
+	}
+
 }

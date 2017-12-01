@@ -145,4 +145,16 @@ public interface EditorMotor {
 	 * @param selectionMacro
 	 */
 	public void setSelectionMacro(boolean selectionMacro);
+
+	/**
+	 * This method gets the content of the clipboard
+	 * 
+	 * @return an String with the content
+	 */
+	public String getContentClipboard();
+	/**
+	 * This method sets the content of the clipboard
+	 * @param content
+	 */
+	public void setContentClipboard(String content);
 }
