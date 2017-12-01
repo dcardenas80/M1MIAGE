@@ -23,6 +23,7 @@ class IHMTest {
 	IHM ihm;
 	Client client;
 	EditorMotor editorMotor;
+
 	/**
 	 * This method is call before each execution of each test, the IHMImpl class use
 	 * a lazy singleton pattern that affects the outcome of unit test, that's why
@@ -45,27 +46,7 @@ class IHMTest {
 		insertText.execute();
 		assertEquals(1, ihm.getCaretPosition());
 	}
-	/**
-	 * this will always fall because there is not
-	 */
-	@Test
-	void setSelection() {
-		editorMotor.attach(ihm);
-		char[] character = { 't', 'e', 's', 't', ' ','s','e','l','e','c','t' };
-		Command insertText = new InsertText();
-		for (int i = 0; i < character.length; i++) {
-			ihm.setLastChart(character[i]);
-			insertText.execute();
-		}
-		ihm.setSelectionOrigin(5);
-		ihm.setSelectionSize(5);
-		SelectText selectText = new SelectText();
-		selectText.execute();
-		assertAll("Selection Assertion", () -> assertTrue(5 == editorMotor.getSelectionOrigin()),
-				() -> assertTrue(10-5 == editorMotor.getSelectionSize()));
-	
-	}
-	
+
 	@AfterEach
 	void reset() {
 

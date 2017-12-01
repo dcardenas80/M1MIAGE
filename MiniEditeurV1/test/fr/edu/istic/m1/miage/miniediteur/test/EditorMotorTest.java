@@ -21,7 +21,7 @@ class EditorMotorTest {
 	EditorMotor editorMotor;
 
 	/**
-	 * it is needed the editorMotor Class to make the test but this class has a lazy
+	 * it is needed because the editorMotor Class has to make the test but this class has a lazy
 	 * singleton pattern it is necessary to use Reflection to set the instance as
 	 * null with that the current test being played will not be affected with the
 	 * results from the previous text
