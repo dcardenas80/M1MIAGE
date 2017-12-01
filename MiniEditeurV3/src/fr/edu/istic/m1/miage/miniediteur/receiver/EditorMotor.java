@@ -7,7 +7,7 @@ import fr.edu.istic.m1.miage.miniediteur.invoker.IHM;
 
 /**
  * @author Diego Cardenas
- * @version 1.0
+ * @version 2.0
  */
 
 public interface EditorMotor {
@@ -107,4 +107,100 @@ public interface EditorMotor {
 	 */
 	public abstract void detach(IHM ihm);
 
+	/**
+	 * This method is used to erase text from the buffer in a particular position
+	 */
+	public void deleteTextByPosition(int position);
+
+	/**
+	 * This method returns the last set of character or the last chart deleted from
+	 * the Buffer
+	 * 
+	 * @return
+	 */
+	public String getLastCharactersDeleted();
+
+	/**
+	 * This method is charged with the insertion of a set of characters on the
+	 * Motor's Buffer
+	 * 
+	 * @param characters
+	 *            - a set of characters to be inserted on the Motor's buffer
+	 */
+	public void insertText(String characters);
+
+	/**
+	 * This method updates the caret position and notifies the class' observers to
+	 * do the same.
+	 * 
+	 * @param caretPosition
+	 *            - the value of the new position
+	 */
+	public void updateCaretPosition(int caretPosition);
+
+	/**
+	 * This method returns the last content pasted on the Motor's Buffer
+	 * 
+	 * @return
+	 */
+	public String returnPasteContent() throws UnsupportedFlavorException, IOException;
+
+	/**
+	 * This method verifies if the action to do is a selection
+	 * 
+	 * @return a boolean with true if is a selection false in the other case
+	 */
+	public boolean isSelection();
+	/**
+	 * This method set a new whole buffer content
+	 * @param buffer
+	 */
+	public void setBuffer(String buffer);
+	/**
+	 * This method returns a String with the text of the Editor's buffer
+	 * 
+	 * @return a String with the text on the Editor's buffer
+	 */
+	public String getBuffer();
+
+	/**
+	 * This method returns the length of the buffer
+	 * 
+	 * @return an integer with the buffer's length value
+	 */
+	public int getBufferLength();
+
+	/**
+	 * This method sets the caret from the user on Editor's buffer
+	 * 
+	 * @param CaretPosition
+	 *            the value of the new position
+	 */
+	public void setCaretByCommand(int caretPosition);
+
+	/**
+	 * This method gets a boolean that let know the editor when notify an observer
+	 * 
+	 * @return the value of the boolean
+	 */
+	public boolean isSelectionMacro();
+
+	/**
+	 * This method sets a boolean that let know the editor when notify an observer
+	 * 
+	 * @param selectionMacro
+	 */
+	public void setSelectionMacro(boolean selectionMacro);
+
+	/**
+	 * This method gets the content of the clipboard
+	 * 
+	 * @return an String with the content
+	 */
+	public String getContentClipboard();
+	/**
+	 * This method sets the content of the clipboard
+	 * @param content
+	 */
+	public void setContentClipboard(String content);
 }

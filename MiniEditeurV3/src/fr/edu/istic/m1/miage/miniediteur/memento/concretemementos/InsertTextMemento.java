@@ -12,19 +12,21 @@ import fr.edu.istic.m1.miage.miniediteur.memento.Memento;
 public class InsertTextMemento implements Memento {
 	private final String type = "InsertText";
 	private char state;
+	private int position;
 
 	/**
 	 * Class constructor needs the char which has been typed to be storeed
 	 * 
 	 * @param state
 	 */
-	public InsertTextMemento(char state) {
+	public InsertTextMemento(char state, int position) {
 		// TODO Auto-generated constructor stub
 		this.state = state;
+		this.position = position;
 	}
 
 	/**
-	 * returns the char stored in this memento
+	 * Returns the char stored in this memento
 	 * 
 	 * @return state
 	 */
@@ -37,6 +39,15 @@ public class InsertTextMemento implements Memento {
 	public String getType() {
 		// TODO Auto-generated method stub
 		return type;
+	}
+
+	/**
+	 * Returns the position of the text inserted
+	 * 
+	 * @return an integer with the position stored in this memento
+	 */
+	public int getPosition() {
+		return position;
 	}
 
 }

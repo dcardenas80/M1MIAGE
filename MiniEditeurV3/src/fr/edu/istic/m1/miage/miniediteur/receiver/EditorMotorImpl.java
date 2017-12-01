@@ -10,7 +10,7 @@ import fr.edu.istic.m1.miage.miniediteur.invoker.IHM;
 
 /**
  * @author Diego Cardenas
- * @version 1.0
+ * @version 2.0
  * 
  */
 public class EditorMotorImpl implements EditorMotor {
@@ -24,6 +24,8 @@ public class EditorMotorImpl implements EditorMotor {
 	private Selection selection;
 	private Collection<IHM> ihmObservers;
 	private ClipBoard clipBoard;
+	private boolean selectionMacro;
+
 	/**
 	 * Private constructor of the EditorMotorImpl class
 	 */
@@ -54,7 +56,9 @@ public class EditorMotorImpl implements EditorMotor {
 		selection.setSelectionOrigin(selectionOrigin);
 		selection.setSelectionSize(selectionEnd);
 		selection.setSelection(true);
-		notifyObservers();
+		if (!selectionMacro) {
+			notifyObservers();
+		}
 	}
 
 	@Override
@@ -69,10 +73,12 @@ public class EditorMotorImpl implements EditorMotor {
 	public void deleteText() throws StringIndexOutOfBoundsException {
 		// TODO Auto-generated method stub
 		if (selection.isSelection()) {
-			textMoteur.cutText(getSelectionOrigin(), getSelectionSize());
+			textMoteur.deleteTextByRange(getSelectionOrigin(), getSelectionSize());
+		} else {
+			textMoteur.deleteText();
 		}
 		selection.setSelection(false);
-		textMoteur.deleteText();
+
 		notifyObservers();
 	}
 
@@ -106,14 +112,15 @@ public class EditorMotorImpl implements EditorMotor {
 	 * 
 	 * @return a String with the text on the Editor's buffer
 	 */
+	@Override
 	public String getBuffer() {
 
 		return textMoteur.getMotorText();
 
 	}
 
-	public void setCaret(int caretPostion) {
-		textMoteur.setCaretPosition(caretPostion);
+	public void setCaret(int caretPosition) {
+		textMoteur.setCaretPosition(caretPosition);
 	}
 
 	@Override
@@ -127,6 +134,7 @@ public class EditorMotorImpl implements EditorMotor {
 	 * 
 	 * @return a boolean with true if is a selection false in the other case
 	 */
+	@Override
 	public boolean isSelection() {
 		return selection.isSelection();
 	}
@@ -154,18 +162,21 @@ public class EditorMotorImpl implements EditorMotor {
 	@Override
 	public void copyText() {
 		// TODO Auto-generated method stub
-		selection.setSelection(false);
-		if (getSelectionSize() > 0) {
-			String textClipBoard = textMoteur.copyText(getSelectionOrigin(), getSelectionSize());
-			clipBoard.setContent(textClipBoard);
+		if (selection.isSelection()) {
+			selection.setSelection(false);
+			if (getSelectionSize() > 0) {
+				String textClipBoard = textMoteur.copyText(getSelectionOrigin(), getSelectionSize());
+				clipBoard.setContent(textClipBoard);
+				eraseSelection();
+			}
 
+			notifyObservers();
 		}
 
-		notifyObservers();
 	}
 
-	public int getBufferLenght() {
-		return textMoteur.getLenght();
+	public int getBufferLength() {
+		return textMoteur.getLength();
 	}
 
 	@Override
@@ -175,7 +186,91 @@ public class EditorMotorImpl implements EditorMotor {
 		if (getSelectionSize() > 0) {
 			String textClipBoard = textMoteur.cutText(getSelectionOrigin(), getSelectionSize());
 			clipBoard.setContent(textClipBoard);
+			eraseSelection();
 		}
+		notifyObservers();
+	}
+
+	@Override
+	public void deleteTextByPosition(int position) {
+		// TODO Auto-generated method stub
+		textMoteur.deleteTextbyPosition(position);
+		notifyObservers();
+	}
+
+	@Override
+	public String getLastCharactersDeleted() {
+		// TODO Auto-generated method stub
+		return textMoteur.getLastWordDeleted();
+	}
+
+	@Override
+	public void insertText(String characters) {
+		// TODO Auto-generated method stub
+		selection.setSelection(false);
+		textMoteur.append(characters);
+
+		notifyObservers();
+	}
+
+	@Override
+	public void updateCaretPosition(int caretPosition) {
+		// TODO Auto-generated method stub
+		selection.setSelection(false);
+		setCaret(caretPosition);
+		notifyObservers();
+	}
+
+	@Override
+	public String returnPasteContent() throws UnsupportedFlavorException, IOException {
+		// TODO Auto-generated method stub
+		return clipBoard.getContent();
+	}
+
+	@Override
+	public void setCaretByCommand(int caretPosition) {
+		// TODO Auto-generated method stub
+		setCaret(caretPosition);
+		notifyObservers();
+	}
+
+	@Override
+	public boolean isSelectionMacro() {
+		return selectionMacro;
+	}
+
+	@Override
+	public void setSelectionMacro(boolean selectionMacro) {
+		this.selectionMacro = selectionMacro;
+	}
+
+	/**
+	 * This method erase a selection from the Editor's selection
+	 */
+	public void eraseSelection() {
+		selection.setSelectionOrigin(getCaret());
+		selection.setSelectionSize(getCaret());
+	}
+
+	@Override
+	public String getContentClipboard() {
+		try {
+			return clipBoard.getContent();
+		} catch (UnsupportedFlavorException | IOException e) {
+			// TODO Auto-generated catch block
+			return "";
+		}
+	}
+	
+	@Override
+	public void setContentClipboard(String content) {
+		clipBoard.setContent(content);
+	}
+
+	@Override
+	public void setBuffer(String buffer) {
+		// TODO Auto-generated method stub
+		textMoteur.setBuffer(buffer);
 		notifyObservers();
 	}
 

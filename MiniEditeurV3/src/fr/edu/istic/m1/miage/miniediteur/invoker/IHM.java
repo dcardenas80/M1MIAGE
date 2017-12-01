@@ -4,7 +4,7 @@ import fr.edu.istic.m1.miage.miniediteur.command.Command;
 
 /**
  * @author Diego Cardenas
- * @version 1.0
+ * @version 3.0
  */
 
 public interface IHM {
@@ -23,5 +23,77 @@ public interface IHM {
 	 * the observer when it is notified by the subject
 	 */
 	public void update();
+
+	/**
+	 * get the point where a selection begins
+	 * 
+	 * @return an integer with the value of the initial position
+	 */
+	public int getSelectionOrigin();
+
+	/**
+	 * sets the initial point of a selection on the IHM
+	 * 
+	 * @param selectionOrigin
+	 *            - the initial point
+	 */
+	public void setSelectionOrigin(int selectionOrigin);
+
+	/**
+	 * This method gets the size of the selection
+	 * 
+	 * @return - the value with the size
+	 */
+	public int getSelectionSize();
+
+	/**
+	 * This method set the selection size on the IHM
+	 * 
+	 * @param selectionSize
+	 *            - the integer value for the size
+	 */
+	public void setSelectionSize(int selectionSize);
+
+
+	/**
+	 * returns the last chart typed by the user
+	 * 
+	 * @return a char that contains the last typed char by the client
+	 */
+	public char getLastChart();
+
+	/**
+	 * sets the last char that the users has typed
+	 * 
+	 * @param lastChart
+	 *            - the last char typed
+	 */
+	public void setLastChart(char lastChart);
+
+	/**
+	 * returns the caret position on the IHM
+	 * 
+	 * @return a integer with the actual caret position on the IHM
+	 */
+	public int getCaretPosition();
+	
+	/**
+	 * this method changes the button text and it's icon it will be used for the
+	 * register button when clicked
+	 */
+	public void changeButtonsProperties();
+	/**
+	 * This method set the caret Position
+	 * 
+	 * @param caretPosition - the value with the caret position
+	 */
+	public void setCaretPosition(int caretPosition);
+
+	/**
+	 * This methods shows a warning message when an action can be made
+	 * 
+	 * @param message
+	 */
+	public void setWarningMessage(String message);
 
 }

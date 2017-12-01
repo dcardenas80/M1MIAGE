@@ -13,6 +13,7 @@ public class Buffer {
 
 	private StringBuffer motorText;
 	private int caretPosition = 0;
+	private String lastWordDeleted = "";
 
 	/**
 	 * Constructor of the class, charged of initialize a stringBuffer
@@ -28,10 +29,21 @@ public class Buffer {
 	 */
 	public void deleteText() throws StringIndexOutOfBoundsException {
 		if (getCaretPosition() - 1 > -1) {
+			setLastWordDeleted(motorText.substring(getCaretPosition() - 1, getCaretPosition()));
 			setCaretPosition(getCaretPosition() - 1);
 			motorText.deleteCharAt(getCaretPosition());
 		}
 
+	}
+	/**
+	 * This method delete text from the buffer in a specific position
+	 * @param position an integer with the position of the text to delete
+	 */
+	public void deleteTextbyPosition(int position) {
+		if (position > -1) {
+			setCaretPosition(position-1);
+			motorText.deleteCharAt(position-1);
+		}
 	}
 
 	/**
@@ -135,8 +147,34 @@ public class Buffer {
 	 * 
 	 * @return an integer with the value of the length
 	 */
-	public int getLenght() {
+	public int getLength() {
 		return motorText.length();
+	}
+	/**
+	 * Delete the requested text by its origin and its size
+	 * 
+	 * @param selectionOrigin
+	 *            - the origin of the text to delete
+	 * @param selectionSize
+	 *            - the size of the text to delete
+	 */
+	public void deleteTextByRange(int selectionOrigin, int selectionSize) {
+		setLastWordDeleted(motorText.substring(selectionOrigin, selectionOrigin + selectionSize));
+		motorText.delete(selectionOrigin, selectionOrigin + selectionSize);
+		setCaretPosition(selectionOrigin);
+	}
+
+	public String getLastWordDeleted() {
+		return lastWordDeleted;
+	}
+
+	private void setLastWordDeleted(String lastWordDeleted) {
+		this.lastWordDeleted = lastWordDeleted;
+	}
+	public void setBuffer(String bufferText) {
+		motorText.delete(0, getLength());
+		motorText.append(bufferText);
+		setCaretPosition(getLength());
 	}
 
 }

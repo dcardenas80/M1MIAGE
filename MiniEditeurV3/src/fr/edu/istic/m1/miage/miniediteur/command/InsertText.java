@@ -1,6 +1,8 @@
 package fr.edu.istic.m1.miage.miniediteur.command;
 
+import fr.edu.istic.m1.miage.miniediteur.invoker.IHM;
 import fr.edu.istic.m1.miage.miniediteur.invoker.IHMImpl;
+import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotor;
 import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
 
 /**
@@ -8,12 +10,12 @@ import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
  * @version 1.0
  * 
  *          Class charged with the logic implementation of the concrete command
- *          InsertText
+ *          Insert Text into the editor's motor
  */
 public class InsertText implements Command {
 
-	private IHMImpl ihmImpl;
-	private EditorMotorImpl editorMotorImpl;
+	private IHM ihmImpl;
+	private EditorMotor editorMotorImpl;
 
 	/**
 	 * Execute method for the command InsertText

@@ -8,7 +8,7 @@ import fr.edu.istic.m1.miage.miniediteur.memento.Recorder;
  * @version 1.0
  * 
  *          this class serves as a command to star the recording of series of
- *          commands
+ *          commands into the recorder
  *
  */
 public class StartRecording implements Command {

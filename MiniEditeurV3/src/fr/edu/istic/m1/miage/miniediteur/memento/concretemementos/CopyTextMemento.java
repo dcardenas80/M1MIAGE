@@ -11,12 +11,25 @@ import fr.edu.istic.m1.miage.miniediteur.memento.Memento;
  *
  */
 public class CopyTextMemento implements Memento {
-	public final String type = "CopyText";
-
+	private final String type = "CopyText";
+	private String state;
+	private String stateBefore;
+	public CopyTextMemento(String state, String stateBefore) {
+		// TODO Auto-generated constructor stub
+		this.state = state;
+		this.stateBefore = stateBefore;
+	}
 	@Override
 	public String getType() {
 		// TODO Auto-generated method stub
 		return type;
+	}
+	public String getState() {
+		return this.state;
+	}
+	
+	public String getStateBefore(){
+		return this.stateBefore;
 	}
 
 }

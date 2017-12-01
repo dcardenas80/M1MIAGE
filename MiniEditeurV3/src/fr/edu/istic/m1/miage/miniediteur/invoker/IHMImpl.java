@@ -9,6 +9,7 @@ import java.awt.event.KeyListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -17,6 +18,7 @@ import javax.swing.event.CaretListener;
 
 import fr.edu.istic.m1.miage.miniediteur.client.Client;
 import fr.edu.istic.m1.miage.miniediteur.command.Command;
+import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotor;
 import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotorImpl;
 
 /**
@@ -29,7 +31,7 @@ public class IHMImpl implements IHM {
 
 	private static IHMImpl IHMImplInstance;
 	private static Client client;
-	private static EditorMotorImpl editorMotorImpl;
+	private static EditorMotor editorMotorImpl;
 	private int selectionOrigin;
 	private int selectionSize;
 	private char lastChart;
@@ -43,6 +45,8 @@ public class IHMImpl implements IHM {
 	private JButton btnPaste;
 	private JButton btnRecording;
 	private JButton btnReplay;
+	private JButton btnUndo;
+	private JButton btnRedo;
 
 	/**
 	 * private Constructor of the IHMImpl Class it receives three listeners charged
@@ -83,21 +87,17 @@ public class IHMImpl implements IHM {
 
 		JPanel pnlBorder = new JPanel();
 		frmTextProcessor.getContentPane().add(pnlBorder, BorderLayout.NORTH);
-		pnlBorder.setLayout(new FlowLayout(FlowLayout.CENTER, 80, 10));
+		pnlBorder.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
 		btnCopy = new JButton("Copier Texte");
-		btnCopy.setVerticalAlignment(SwingConstants.TOP);
 		btnCopy.addActionListener(actionListener);
 		btnCopy.setIcon(new ImageIcon(("icons/copyIcon.png")));
 		btnPaste = new JButton("Coller Texte");
-		btnPaste.setVerticalAlignment(SwingConstants.TOP);
 		btnPaste.addActionListener(actionListener);
 		btnPaste.setIcon(new ImageIcon(("icons/pasteIcon.png")));
 		btnCut = new JButton("Couper Texte");
-		btnCut.setVerticalAlignment(SwingConstants.TOP);
 		btnCut.addActionListener(actionListener);
 		btnCut.setIcon(new ImageIcon(("icons/cutIcon.png")));
 		btnRecording = new JButton("Enregistrer");
-		btnRecording.setVerticalAlignment(SwingConstants.TOP);
 		btnRecording.addActionListener(actionListener);
 		btnRecording.setIcon(new ImageIcon("icons/recordIcon.png"));
 		btnReplay = new JButton("Rejouer");
@@ -105,11 +105,21 @@ public class IHMImpl implements IHM {
 		btnReplay.addActionListener(actionListener);
 		btnReplay.setIcon(new ImageIcon("icons/playIcon.png"));
 		btnReplay.setEnabled(false);
+		btnUndo = new JButton("Defaire");
+		btnUndo.setVerticalAlignment(SwingConstants.TOP);
+		btnUndo.addActionListener(actionListener);
+		btnUndo.setIcon(new ImageIcon("icons/undoIcon.png"));
+		btnRedo = new JButton("Refaire");
+		btnRedo.setVerticalAlignment(SwingConstants.TOP);
+		btnRedo.addActionListener(actionListener);
+		btnRedo.setIcon(new ImageIcon("icons/redoIcon.png"));
 		pnlBorder.add(btnCopy);
 		pnlBorder.add(btnPaste);
 		pnlBorder.add(btnCut);
 		pnlBorder.add(btnRecording);
 		pnlBorder.add(btnReplay);
+		pnlBorder.add(btnUndo);
+		pnlBorder.add(btnRedo);
 		pnlText = new JTextArea();
 		pnlText.addCaretListener(caretListener);
 		pnlText.addKeyListener(keyListener);
@@ -148,6 +158,7 @@ public class IHMImpl implements IHM {
 		this.command.execute();
 
 	}
+
 	/**
 	 * get the point where a selection begins
 	 * 
@@ -251,5 +262,22 @@ public class IHMImpl implements IHM {
 
 		}
 	}
+
+	@Override
+	public void setWarningMessage(String message) {
+		// TODO Auto-generated method stub
+		 JOptionPane.showMessageDialog(pnlText, message, "Attention",
+			        JOptionPane.WARNING_MESSAGE);
+	}
+	
+	@Override
+	public void setCaretPosition(int caretPosition) {
+		int textLenght = pnlText.getText().length();
+		if (caretPosition > -1 && caretPosition <= textLenght) {
+			pnlText.setCaretPosition(caretPosition);
+		}
+
+	}
+	
 
 }
