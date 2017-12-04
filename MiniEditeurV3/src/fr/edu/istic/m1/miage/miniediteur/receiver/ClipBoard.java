@@ -24,7 +24,9 @@ public class ClipBoard {
 	 * 
 	 * @return a String with the content of the ClipBoard
 	 * @throws UnsupportedFlavorException
+	 *             - Error thrown when trying to insert data different to String
 	 * @throws IOException
+	 *             - Error thrown when trying to get the clipboard of system
 	 */
 	public String getContent() throws UnsupportedFlavorException, IOException {
 		return (String) clipboard.getData(DataFlavor.stringFlavor);

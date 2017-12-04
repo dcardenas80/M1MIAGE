@@ -13,7 +13,6 @@ import fr.edu.istic.m1.miage.miniediteur.command.mementoCommands.RecordablePaste
 import fr.edu.istic.m1.miage.miniediteur.command.mementoCommands.RecordablePlayRecording;
 import fr.edu.istic.m1.miage.miniediteur.command.mementoCommands.RecordableSelectText;
 
-
 /**
  * 
  * @author Diego Cardenas
@@ -63,7 +62,7 @@ public class Recorder {
 	 * 
 	 * this method will record every command that it's part of a macro
 	 *
-	 * @param recordCommand
+	 * @param recordCommand - the command to record
 	 */
 	public void recordCommands(RecordCommand recordCommand) {
 		if (recording) {
@@ -131,7 +130,7 @@ public class Recorder {
 			command = new RecordablePasteText();
 		} else if (memento.getType().contentEquals("CutText")) {
 			command = new RecordableCutText();
-		}else if (memento.getType().contentEquals("PlayRecording")) {
+		} else if (memento.getType().contentEquals("PlayRecording")) {
 			command = new RecordablePlayRecording();
 		}
 		command.setMemento(memento);
@@ -153,15 +152,33 @@ public class Recorder {
 		}
 	}
 
+	/**
+	 * Register a recordableCommand to be undo
+	 * 
+	 * @param recordableCommand
+	 *            - the command to undo
+	 */
 	public void register(RecordCommand recordableCommand) {
 		redoStack.clear();
 		Memento memento = recordableCommand.getMemento();
 		registerMemento(memento);
 	}
+
+	/**
+	 * This method registers the concrete memento of the recordable command
+	 * 
+	 * @param memento
+	 *            - the memento to record
+	 */
 	public void registerMemento(Memento memento) {
 		undoStack.push(memento);
 	}
 
+	/**
+	 * Plays the reverse command of the memento
+	 * 
+	 * @param memento the memento to play the reverse command
+	 */
 	public void playReverseCommand(Memento memento) {
 		RecordCommand command = null;
 		if (memento.getType().contentEquals("InsertText")) {
@@ -176,11 +193,12 @@ public class Recorder {
 			command = new RecordablePasteText();
 		} else if (memento.getType().contentEquals("CutText")) {
 			command = new RecordableCutText();
-		}else if (memento.getType().contentEquals("PlayRecording")) {
+		} else if (memento.getType().contentEquals("PlayRecording")) {
 			command = new RecordablePlayRecording();
 		}
 		command.reverseCommand(memento);
 	}
+
 	/**
 	 * This method sets a caret to be use by RecordablePasteCommand when replayed
 	 * 

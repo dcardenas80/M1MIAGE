@@ -26,8 +26,10 @@ public interface EditorMotor {
 	/**
 	 * This method paste a text into the Editor's motor buffer
 	 * 
-	 * @throws IOException
 	 * @throws UnsupportedFlavorException
+	 *             - Error thrown when trying to insert data different to String
+	 * @throws IOException
+	 *             - Error thrown when trying to get the clipboard of system
 	 */
 	public void pasteText() throws UnsupportedFlavorException, IOException;
 
@@ -73,7 +75,7 @@ public interface EditorMotor {
 	/**
 	 * This method updates the caret positions of the Editor's motor buffer
 	 * 
-	 * @param caretPostion
+	 * @param caretPostion - the integer with the caret position
 	 */
 	public void setCaret(int caretPostion);
 
@@ -101,7 +103,7 @@ public interface EditorMotor {
 	/**
 	 * Detach an observer.
 	 * 
-	 * @param IHM
+	 * @param ihm
 	 *            - observer to remove if it's on the observers following the
 	 *            subject
 	 */

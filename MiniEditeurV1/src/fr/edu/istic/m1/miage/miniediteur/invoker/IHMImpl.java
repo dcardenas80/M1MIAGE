@@ -224,4 +224,12 @@ public class IHMImpl implements IHM {
 		}
 
 	}
+
+	@Override
+	public void setFocusPanel() {
+		// TODO Auto-generated method stub
+		pnlText.requestFocusInWindow();
+	}
+	
+	
 }

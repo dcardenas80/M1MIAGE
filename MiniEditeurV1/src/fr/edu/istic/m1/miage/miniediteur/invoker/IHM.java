@@ -11,8 +11,6 @@ public interface IHM {
 	/**
 	 * sets and executes the commands
 	 * 
-	 * @param key
-	 *            key that identifies the concrete command
 	 * @param command
 	 *            concrete command to be set
 	 */
@@ -80,7 +78,12 @@ public interface IHM {
 	 * This method set the caret Position
 	 * 
 	 * @param caretPosition
+	 *            - integer with caret position
 	 */
 	public void setCaretPosition(int caretPosition);
 
+	/**
+	 * This method request the focus on the panel
+	 */
+	public void setFocusPanel();
 }

@@ -258,18 +258,16 @@ public class IHMImpl implements IHM {
 			if (!btnReplay.isEnabled()) {
 				btnReplay.setEnabled(true);
 			}
-			pnlText.requestFocusInWindow();
-
 		}
+		pnlText.requestFocusInWindow();
 	}
 
 	@Override
 	public void setWarningMessage(String message) {
 		// TODO Auto-generated method stub
-		 JOptionPane.showMessageDialog(pnlText, message, "Attention",
-			        JOptionPane.WARNING_MESSAGE);
+		JOptionPane.showMessageDialog(pnlText, message, "Attention", JOptionPane.WARNING_MESSAGE);
 	}
-	
+
 	@Override
 	public void setCaretPosition(int caretPosition) {
 		int textLenght = pnlText.getText().length();
@@ -278,6 +276,11 @@ public class IHMImpl implements IHM {
 		}
 
 	}
-	
+
+	@Override
+	public void setFocusPanel() {
+		// TODO Auto-generated method stub
+		pnlText.requestFocusInWindow();
+	}
 
 }

@@ -11,8 +11,6 @@ public interface IHM {
 	/**
 	 * sets and executes the commands
 	 * 
-	 * @param key
-	 *            key that identifies the concrete command
 	 * @param command
 	 *            concrete command to be set
 	 */
@@ -54,7 +52,6 @@ public interface IHM {
 	 */
 	public void setSelectionSize(int selectionSize);
 
-
 	/**
 	 * returns the last chart typed by the user
 	 * 
@@ -76,24 +73,30 @@ public interface IHM {
 	 * @return a integer with the actual caret position on the IHM
 	 */
 	public int getCaretPosition();
-	
+
 	/**
 	 * this method changes the button text and it's icon it will be used for the
 	 * register button when clicked
 	 */
 	public void changeButtonsProperties();
+
 	/**
 	 * This method set the caret Position
 	 * 
-	 * @param caretPosition - the value with the caret position
+	 * @param caretPosition
+	 *            - the value with the caret position
 	 */
 	public void setCaretPosition(int caretPosition);
 
 	/**
 	 * This methods shows a warning message when an action can be made
 	 * 
-	 * @param message
+	 * @param message the message of warning to set
 	 */
 	public void setWarningMessage(String message);
 
+	/**
+	 * This method request the focus on the panel
+	 */
+	public void setFocusPanel();
 }

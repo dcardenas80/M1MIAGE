@@ -26,8 +26,10 @@ public interface EditorMotor {
 	/**
 	 * This method paste a text into the Editor's motor buffer
 	 * 
-	 * @throws IOException
 	 * @throws UnsupportedFlavorException
+	 *             - Error thrown when trying to insert data different to String
+	 * @throws IOException
+	 *             - Error thrown when trying to get the clipboard of system
 	 */
 	public void pasteText() throws UnsupportedFlavorException, IOException;
 
@@ -101,7 +103,7 @@ public interface EditorMotor {
 	/**
 	 * Detach an observer.
 	 * 
-	 * @param IHM
+	 * @param ihm
 	 *            - observer to remove if it's on the observers following the
 	 *            subject
 	 */
@@ -109,6 +111,9 @@ public interface EditorMotor {
 
 	/**
 	 * This method is used to erase text from the buffer in a particular position
+	 * 
+	 * @param position
+	 *            - the position to do the command
 	 */
 	public void deleteTextByPosition(int position);
 
@@ -116,7 +121,7 @@ public interface EditorMotor {
 	 * This method returns the last set of character or the last chart deleted from
 	 * the Buffer
 	 * 
-	 * @return
+	 * @return the value with the last char inserted
 	 */
 	public String getLastCharactersDeleted();
 
@@ -141,7 +146,12 @@ public interface EditorMotor {
 	/**
 	 * This method returns the last content pasted on the Motor's Buffer
 	 * 
-	 * @return
+	 * @return the content that has being pasted
+	 * 	 @throws UnsupportedFlavorException
+	 *             - Error thrown when trying to insert data different to String
+	 * @throws IOException
+	 *             - Error thrown when trying to get the clipboard of system
+	 *
 	 */
 	public String returnPasteContent() throws UnsupportedFlavorException, IOException;
 
@@ -151,11 +161,14 @@ public interface EditorMotor {
 	 * @return a boolean with true if is a selection false in the other case
 	 */
 	public boolean isSelection();
+
 	/**
 	 * This method set a new whole buffer content
-	 * @param buffer
+	 * 
+	 * @param buffer - the string to set the buffer
 	 */
 	public void setBuffer(String buffer);
+
 	/**
 	 * This method returns a String with the text of the Editor's buffer
 	 * 
@@ -173,7 +186,7 @@ public interface EditorMotor {
 	/**
 	 * This method sets the caret from the user on Editor's buffer
 	 * 
-	 * @param CaretPosition
+	 * @param caretPosition
 	 *            the value of the new position
 	 */
 	public void setCaretByCommand(int caretPosition);
@@ -188,7 +201,7 @@ public interface EditorMotor {
 	/**
 	 * This method sets a boolean that let know the editor when notify an observer
 	 * 
-	 * @param selectionMacro
+	 * @param selectionMacro - the boolean to identify if its a selection macro
 	 */
 	public void setSelectionMacro(boolean selectionMacro);
 
@@ -198,9 +211,11 @@ public interface EditorMotor {
 	 * @return an String with the content
 	 */
 	public String getContentClipboard();
+
 	/**
 	 * This method sets the content of the clipboard
-	 * @param content
+	 * 
+	 * @param content - the content to set on the clipboard
 	 */
 	public void setContentClipboard(String content);
 }

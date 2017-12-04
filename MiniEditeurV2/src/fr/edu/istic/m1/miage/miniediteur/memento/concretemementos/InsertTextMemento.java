@@ -14,9 +14,9 @@ public class InsertTextMemento implements Memento {
 	private char state;
 
 	/**
-	 * Class constructor needs the char which has been typed to be storeed
+	 * Class constructor needs the char which has been typed to be stored
 	 * 
-	 * @param state
+	 * @param state - the char to save
 	 */
 	public InsertTextMemento(char state) {
 		// TODO Auto-generated constructor stub

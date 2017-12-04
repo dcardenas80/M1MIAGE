@@ -1,8 +1,6 @@
 package fr.edu.istic.m1.miage.miniediteur.test;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.lang.reflect.Field;
 
@@ -13,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import fr.edu.istic.m1.miage.miniediteur.client.Client;
 import fr.edu.istic.m1.miage.miniediteur.command.Command;
 import fr.edu.istic.m1.miage.miniediteur.command.InsertText;
-import fr.edu.istic.m1.miage.miniediteur.command.SelectText;
 import fr.edu.istic.m1.miage.miniediteur.invoker.IHM;
 import fr.edu.istic.m1.miage.miniediteur.invoker.IHMImpl;
 import fr.edu.istic.m1.miage.miniediteur.receiver.EditorMotor;

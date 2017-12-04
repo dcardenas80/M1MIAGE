@@ -38,6 +38,7 @@ public class Client implements ActionListener, KeyListener, CaretListener {
 	private static EditorMotor editorMotorImpl;
 	private Command command;
 	private static final String[] buttonsKeys = { "Copier Texte", "Coller Texte", "Couper Texte" };
+	private boolean notRegister = true;
 
 	/**
 	 * this method registers all the action events inside the buttons in the
@@ -50,12 +51,15 @@ public class Client implements ActionListener, KeyListener, CaretListener {
 		if (btnId.contentEquals(buttonsKeys[0])) {
 			command = new CopyText();
 			IHMImplInstance.setCommand(command);
+			IHMImplInstance.setFocusPanel();
 		} else if (btnId.contentEquals(buttonsKeys[1])) {
 			command = new PasteText();
+			IHMImplInstance.setFocusPanel();
 			IHMImplInstance.setCommand(command);
 		} else if (btnId.contentEquals(buttonsKeys[2])) {
 			command = new CutText();
 			IHMImplInstance.setCommand(command);
+			IHMImplInstance.setFocusPanel();
 		}
 
 	}
@@ -120,12 +124,14 @@ public class Client implements ActionListener, KeyListener, CaretListener {
 		} else if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_V) {
 			command = new PasteText();
 			IHMImplInstance.setCommand(command);
-		}else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 			int caretPosition = IHMImplInstance.getCaretPosition() - 1;
 			IHMImplInstance.setCaretPosition(caretPosition);
 		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			int caretPosition = IHMImplInstance.getCaretPosition() + 1;
 			IHMImplInstance.setCaretPosition(caretPosition);
+		} else if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+			notRegister = false;
 		}
 
 	}
@@ -152,10 +158,12 @@ public class Client implements ActionListener, KeyListener, CaretListener {
 
 			if (keyChar != '\b') /** if key typed is not a backspace */
 			{
-
-				IHMImplInstance.setLastChart(keyChar);
-				command = new InsertText();
-				IHMImplInstance.setCommand(command);
+				if (notRegister) {
+					IHMImplInstance.setLastChart(keyChar);
+					command = new InsertText();
+					IHMImplInstance.setCommand(command);
+				}
+				notRegister = true;
 
 			} else if (keyChar == '\b') {
 				command = new DeleteText();

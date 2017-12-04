@@ -45,7 +45,7 @@ public class Client implements ActionListener, KeyListener, CaretListener {
 	private Command command;
 	private static final String[] buttonsKeys = { "Copier Texte", "Coller Texte", "Couper Texte", "Enregistrer",
 			"Arrêter Enregistrement", "Rejouer", "Defaire", "Refaire" };
-
+	private boolean notRegister = true;
 	/**
 	 * this method registers all the action events inside the buttons in the
 	 * interface
@@ -57,32 +57,35 @@ public class Client implements ActionListener, KeyListener, CaretListener {
 		if (btnId.contentEquals(buttonsKeys[0])) {
 			command = new RecordableCopyText();
 			IHMImplInstance.setCommand(command);
+			IHMImplInstance.setFocusPanel();
 		} else if (btnId.contentEquals(buttonsKeys[1])) {
 			command = new RecordablePasteText();
 			IHMImplInstance.setCommand(command);
+			IHMImplInstance.setFocusPanel();
 		} else if (btnId.contentEquals(buttonsKeys[2])) {
 			command = new RecordableCutText();
 			IHMImplInstance.setCommand(command);
+			IHMImplInstance.setFocusPanel();
 		} else if (btnId.contentEquals(buttonsKeys[3])) {
-
 			command = new StartRecording();
 			IHMImplInstance.setCommand(command);
 			IHMImplInstance.changeButtonsProperties();
 		} else if (btnId.contentEquals(buttonsKeys[4])) {
-
 			command = new StopRecording();
 			IHMImplInstance.setCommand(command);
 			IHMImplInstance.changeButtonsProperties();
 		} else if (btnId.contentEquals(buttonsKeys[5])) {
 			command = new RecordablePlayRecording();
 			IHMImplInstance.setCommand(command);
-			// IHMImplInstance.changeButtonsProperties();
+			IHMImplInstance.setFocusPanel();
 		} else if (btnId.contentEquals(buttonsKeys[6])) {
 			command = new UndoCommand();
 			IHMImplInstance.setCommand(command);
+			IHMImplInstance.setFocusPanel();
 		} else if (btnId.contentEquals(buttonsKeys[7])) {
 			command = new RedoCommand();
 			IHMImplInstance.setCommand(command);
+			IHMImplInstance.setFocusPanel();
 		}
 
 	}
@@ -158,6 +161,8 @@ public class Client implements ActionListener, KeyListener, CaretListener {
 		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			int caretPosition = IHMImplInstance.getCaretPosition() + 1;
 			IHMImplInstance.setCaretPosition(caretPosition);
+		}else if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+			notRegister = false;
 		}
 
 	}
@@ -184,11 +189,12 @@ public class Client implements ActionListener, KeyListener, CaretListener {
 
 			if (keyChar != '\b') /** if key typed is not a backspace */
 			{
-
-				IHMImplInstance.setLastChart(keyChar);
-				command = new RecordableInsertText();
-				IHMImplInstance.setCommand(command);
-
+				if (notRegister) {
+					IHMImplInstance.setLastChart(keyChar);
+					command = new RecordableInsertText();
+					IHMImplInstance.setCommand(command);
+				}
+				notRegister = true;
 			} else if (keyChar == '\b') {
 				command = new RecordableDeleteText();
 				IHMImplInstance.setCommand(command);

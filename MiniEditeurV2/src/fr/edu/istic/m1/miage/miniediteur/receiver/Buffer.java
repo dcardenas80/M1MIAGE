@@ -25,6 +25,7 @@ public class Buffer {
 	 * delete text from the buffer
 	 * 
 	 * @throws StringIndexOutOfBoundsException
+	 *             - exception throw when trying to delete out of bounds of buffer
 	 */
 	public void deleteText() throws StringIndexOutOfBoundsException {
 		if (getCaretPosition() - 1 > -1) {

@@ -10,11 +10,9 @@ import fr.edu.istic.m1.miage.miniediteur.command.Command;
 public interface IHM {
 	/**
 	 * sets and executes the commands
-	 * 
-	 * @param key
-	 *            key that identifies the concrete command
+
 	 * @param command
-	 *            concrete command to be set
+	 *            - concrete command to be set
 	 */
 	public void setCommand(Command command);
 
@@ -85,7 +83,8 @@ public interface IHM {
 	/**
 	 * This method set the caret Position
 	 * 
-	 * @param caretPosition - the value with the caret position
+	 * @param caretPosition
+	 *            - the value with the caret position
 	 */
 	public void setCaretPosition(int caretPosition);
 
@@ -93,7 +92,13 @@ public interface IHM {
 	 * This methods shows a warning message when an action can be made
 	 * 
 	 * @param message
+	 *            - the text of the warning
 	 */
 	public void setWarningMessage(String message);
+
+	/**
+	 * This method request the focus on the panel
+	 */
+	public void setFocusPanel();
 
 }

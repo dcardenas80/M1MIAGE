@@ -19,7 +19,7 @@ public class EditorMotorImpl implements EditorMotor {
 	 * Definition of Singleton Pattern to control the number of instances of the
 	 * class MoteurEditionImpl
 	 */
-	private static EditorMotorImpl moteurEditionImplInstance;
+	private static EditorMotorImpl editorMotorImpl;
 	private Buffer textMoteur;
 	private Selection selection;
 	private Collection<IHM> ihmObservers;
@@ -43,11 +43,11 @@ public class EditorMotorImpl implements EditorMotor {
 	 *         created
 	 */
 	public static EditorMotorImpl getInstance() {
-		if (moteurEditionImplInstance == null) {
+		if (editorMotorImpl == null) {
 
-			moteurEditionImplInstance = new EditorMotorImpl();
+			editorMotorImpl = new EditorMotorImpl();
 		}
-		return moteurEditionImplInstance;
+		return editorMotorImpl;
 	}
 
 	@Override

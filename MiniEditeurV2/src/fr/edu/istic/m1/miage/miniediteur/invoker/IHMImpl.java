@@ -249,9 +249,11 @@ public class IHMImpl implements IHM {
 			if (!btnReplay.isEnabled()) {
 				btnReplay.setEnabled(true);
 			}
-			pnlText.requestFocusInWindow();
+		
+			
 
 		}
+		pnlText.requestFocusInWindow();
 	}
 
 	@Override
@@ -269,6 +271,10 @@ public class IHMImpl implements IHM {
 		}
 
 	}
-	
+	@Override
+	public void setFocusPanel() {
+		// TODO Auto-generated method stub
+		pnlText.requestFocusInWindow();
+	}
 
 }

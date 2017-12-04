@@ -58,6 +58,7 @@ public class Recorder {
 	 * this method will record every command that it's part of a macro
 	 *
 	 * @param recordCommand
+	 *            - the command to be recorded
 	 */
 	public void recordCommands(RecordCommand recordCommand) {
 		if (recording) {

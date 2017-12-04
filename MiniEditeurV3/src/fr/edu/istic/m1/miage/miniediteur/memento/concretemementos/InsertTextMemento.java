@@ -18,6 +18,8 @@ public class InsertTextMemento implements Memento {
 	 * Class constructor needs the char which has been typed to be storeed
 	 * 
 	 * @param state
+	 *            - the char to be inserted
+	 * @param position - the position of the char
 	 */
 	public InsertTextMemento(char state, int position) {
 		// TODO Auto-generated constructor stub
@@ -28,7 +30,7 @@ public class InsertTextMemento implements Memento {
 	/**
 	 * Returns the char stored in this memento
 	 * 
-	 * @return state
+	 * @return state - the char stored
 	 */
 	public char getState() {
 		// TODO Auto-generated method stub

@@ -18,21 +18,25 @@ public class SelectTextMemento implements Memento {
 	 * Constructor of the class receives the points of the selection.
 	 * 
 	 * @param stateOne
+	 *            - the origin of the selection
 	 * @param stateTwo
+	 *            - the size of the selection
 	 */
 	public SelectTextMemento(int stateOne, int stateTwo) {
 		// TODO Auto-generated constructor stub
 		this.state[0] = stateOne;
 		this.state[1] = stateTwo;
 	}
-    
+
 	@Override
 	public String getType() {
 		// TODO Auto-generated method stub
 		return type;
 	}
+
 	/**
 	 * this method returns an array with the selection points stored.
+	 * 
 	 * @return state
 	 */
 	public int[] getState() {

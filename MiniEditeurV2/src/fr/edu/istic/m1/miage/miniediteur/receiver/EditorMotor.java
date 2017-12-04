@@ -26,8 +26,10 @@ public interface EditorMotor {
 	/**
 	 * This method paste a text into the Editor's motor buffer
 	 * 
-	 * @throws IOException
 	 * @throws UnsupportedFlavorException
+	 *             - Error thrown when trying to insert data different to String
+	 * @throws IOException
+	 *             - Error thrown when trying to get the clipboard of system
 	 */
 	public void pasteText() throws UnsupportedFlavorException, IOException;
 
@@ -74,6 +76,7 @@ public interface EditorMotor {
 	 * This method updates the caret positions of the Editor's motor buffer
 	 * 
 	 * @param caretPostion
+	 *            - the int with the caret position
 	 */
 	public void setCaret(int caretPostion);
 
@@ -101,7 +104,7 @@ public interface EditorMotor {
 	/**
 	 * Detach an observer.
 	 * 
-	 * @param IHM
+	 * @param ihm
 	 *            - observer to remove if it's on the observers following the
 	 *            subject
 	 */
@@ -131,18 +134,24 @@ public interface EditorMotor {
 	/**
 	 * This method sets the caret from the user on Editor's buffer
 	 * 
-	 * @param CaretPosition
+	 * @param caretPosition
 	 *            the value of the new position
 	 */
 	public void setCaretByCommand(int caretPosition);
-    /**
-     * This method gets a boolean that let know the editor when notify an observer
-     * @return the value of the boolean
-     */
+
+	/**
+	 * This method gets a boolean that let know the editor when notify an observer
+	 * 
+	 * @return the value of the boolean
+	 */
 	public boolean isSelectionMacro();
+
 	/**
 	 * This method sets a boolean that let know the editor when notify an observer
+	 * 
 	 * @param selectionMacro
+	 *            - boolean that says when a selection it's part of a replay of a
+	 *            macro
 	 */
 	public void setSelectionMacro(boolean selectionMacro);
 
@@ -152,8 +161,10 @@ public interface EditorMotor {
 	 * @return an String with the content
 	 */
 	public String getContentClipboard();
+
 	/**
 	 * This method sets the content of the clipboard
+	 * 
 	 * @param content
 	 */
 	public void setContentClipboard(String content);
