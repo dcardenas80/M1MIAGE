@@ -75,7 +75,7 @@ public interface EditorMotor {
 	/**
 	 * This method updates the caret positions of the Editor's motor buffer
 	 * 
-	 * @param caretPostion
+	 * @param caretPostion - the value of the caretPosition to be set
 	 */
 	public void setCaret(int caretPostion);
 

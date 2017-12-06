@@ -1,0 +1,8 @@
+fr.edu.istic.m1.miage.miniediteur.client
+fr.edu.istic.m1.miage.miniediteur.command
+fr.edu.istic.m1.miage.miniediteur.command.mementoCommands
+fr.edu.istic.m1.miage.miniediteur.invoker
+fr.edu.istic.m1.miage.miniediteur.memento
+fr.edu.istic.m1.miage.miniediteur.memento.concretemementos
+fr.edu.istic.m1.miage.miniediteur.receiver
+fr.edu.istic.m1.miage.miniediteur.test
