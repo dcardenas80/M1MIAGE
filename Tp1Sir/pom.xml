@@ -101,9 +101,9 @@
 
 	</dependencies>
 
-<scm>
-<connection>scm:svn:svn://10.41.37.149/repository1/monappli-web</connection>
- <url>http://10.41.37.149/svn/monappli-web</url>
-</scm>
+	<scm>
+		<connection>scm:git:https://github.com/dcardenas80/M1MIAGE.git</connection>
+		<url>https://github.com/dcardenas80/M1MIAGE</url>
+	</scm>
 
 </project>
