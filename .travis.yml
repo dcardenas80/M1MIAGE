@@ -1,1 +1,2 @@
+before_script: cd Tp1Sir
 language: java
